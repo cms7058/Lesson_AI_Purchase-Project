@@ -1,0 +1,372 @@
+{"kind":"deck","id":"pr/6xmoft","name":"Deck"}
+{"kind":"layout","layoutId":"83e517ad-2110-423f-a0ce-7ace1bb3cddf","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"2af802ee-dbba-4c9e-ac86-6b71c859d737","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/2jzr7q","slide":1,"title":"PEBS COPILOT PURCHASE","textShapes":9}
+{"kind":"shape","id":"sh/6xk321s3","slide":1,"bbox":[0,0,18,720]}
+{"kind":"textbox","id":"sh/tkv2dgbu","slide":1,"text":"PEBS COPILOT PURCHASE","textPreview":"PEBS COPILOT PURCHASE","textChars":21,"textLines":1,"bbox":[48,42,520,30]}
+{"kind":"textbox","id":"sh/8zml4ba9","slide":1,"text":"AI驱动采购决策升级","textPreview":"AI驱动采购决策升级","textChars":10,"textLines":1,"bbox":[48,176,1030,104]}
+{"kind":"textbox","id":"sh/jutk76ts","slide":1,"text":"让报价、成本、供应商与物流方案\n从“人工整理”走向“可计算、可解释、可追溯”","textPreview":"让报价、成本、供应商与物流方案 | 从“人工整理”走向“可计算、可解释、可追溯”","textChars":38,"textLines":2,"bbox":[50,304,840,110]}
+{"kind":"shape","id":"sh/ytk3y1s7","slide":1,"bbox":[50,468,720,0]}
+{"kind":"textbox","id":"sh/lwb29gbi","slide":1,"text":"制造业采购AI智能体｜亮点功能方案","textPreview":"制造业采购AI智能体｜亮点功能方案","textChars":17,"textLines":1,"bbox":[50,492,720,38]}
+{"kind":"textbox","id":"sh/kv2l0bax","slide":1,"text":"基于系统需求规格说明书 V1.1","textPreview":"基于系统需求规格说明书 V1.1","textChars":16,"textLines":1,"bbox":[50,540,500,28]}
+{"kind":"shape","id":"sh/bq9k3mtg","slide":1,"bbox":[936,150,242,340]}
+{"kind":"textbox","id":"sh/ap03uhsv","slide":1,"text":"识别","textPreview":"识别","textChars":2,"textLines":1,"bbox":[972,188,170,42]}
+{"kind":"textbox","id":"sh/8jalojm1","slide":1,"text":"计算","textPreview":"计算","textChars":2,"textLines":1,"bbox":[972,272,170,42]}
+{"kind":"textbox","id":"sh/tkjmhon6","slide":1,"text":"优化","textPreview":"优化","textChars":2,"textLines":1,"bbox":[972,356,170,42]}
+{"kind":"shape","id":"sh/6xs3mt4v","slide":1,"bbox":[972,246,150,0]}
+{"kind":"shape","id":"sh/7y14fe5g","slide":1,"bbox":[972,330,150,0]}
+{"kind":"textbox","id":"sh/kvqlkjmp","slide":1,"text":"2026.07","textPreview":"2026.07","textChars":7,"textLines":1,"bbox":[1094,666,110,22]}
+{"kind":"notes","id":"nt/2jzr7q","slide":1,"text":""}
+{"kind":"slide","id":"sl/1sw9dy","slide":2,"title":"主要模块与功能介绍","textShapes":30}
+{"kind":"textbox","id":"sh/natc7u50","slide":2,"text":"主要模块与功能介绍","textPreview":"主要模块与功能介绍","textChars":9,"textLines":1,"bbox":[42,30,540,26]}
+{"kind":"textbox","id":"sh/ob2tgzml","slide":2,"text":"十个主要模块，共同支撑采购识别、决策与协同","textPreview":"十个主要模块，共同支撑采购识别、决策与协同","textChars":21,"textLines":1,"bbox":[42,66,1160,70]}
+{"kind":"shape","id":"sh/9cbu94nq","slide":2,"bbox":[42,650,1196,0]}
+{"kind":"textbox","id":"sh/el0bap43","slide":2,"text":"来源：制造业采购AI智能体系统需求规格说明书 V1.1","textPreview":"来源：制造业采购AI智能体系统需求规格说明书 V1.1","textChars":27,"textLines":1,"bbox":[42,662,1000,22]}
+{"kind":"textbox","id":"sh/zm9c3a5o","slide":2,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[1170,660,68,22]}
+{"kind":"shape","id":"sh/07itcfm9","slide":2,"bbox":[42,158,1196,126]}
+{"kind":"textbox","id":"sh/18bu5knu","slide":2,"text":"01\n数据认知","textPreview":"01 | 数据认知","textChars":7,"textLines":2,"bbox":[64,178,108,88]}
+{"kind":"textbox","id":"sh/yh4vm94n","slide":2,"text":"把文件、业务数据与外部信息转化为可信数据","textPreview":"把文件、业务数据与外部信息转化为可信数据","textChars":20,"textLines":1,"bbox":[190,178,248,90]}
+{"kind":"shape","id":"sh/jidcfe58","slide":2,"bbox":[458,176,0,90]}
+{"kind":"textbox","id":"sh/rals7etk","slide":2,"text":"AI采购助手","textPreview":"AI采购助手","textChars":6,"textLines":1,"bbox":[486,182,229.33,28]}
+{"kind":"textbox","id":"sh/q9cbytcz","slide":2,"text":"对话查数、任务编排、报告生成","textPreview":"对话查数、任务编排、报告生成","textChars":14,"textLines":1,"bbox":[486,220,229.33,52]}
+{"kind":"shape","id":"sh/dc3a9obq","slide":2,"bbox":[724.33,180,0,82]}
+{"kind":"textbox","id":"sh/sbut0ju5","slide":2,"text":"数据与知识库","textPreview":"数据与知识库","textChars":6,"textLines":1,"bbox":[733.33,182,229.33,28]}
+{"kind":"textbox","id":"sh/felcbytg","slide":2,"text":"文档解析、主数据标准化、证据引用","textPreview":"文档解析、主数据标准化、证据引用","textChars":16,"textLines":1,"bbox":[733.33,220,229.33,52]}
+{"kind":"shape","id":"sh/edcb2tcv","slide":2,"bbox":[971.67,180,0,82]}
+{"kind":"textbox","id":"sh/1gnud8bm","slide":2,"text":"市场与产业链","textPreview":"市场与产业链","textChars":6,"textLines":1,"bbox":[980.67,182,229.33,28]}
+{"kind":"textbox","id":"sh/0fet43u1","slide":2,"text":"供需、价格、政策、产业链与风险","textPreview":"供需、价格、政策、产业链与风险","textChars":15,"textLines":1,"bbox":[980.67,220,229.33,52]}
+{"kind":"shape","id":"sh/ni5cfits","slide":2,"bbox":[42,302,1196,164]}
+{"kind":"textbox","id":"sh/2hwb6dc7","slide":2,"text":"02\n决策计算","textPreview":"02 | 决策计算","textChars":7,"textLines":2,"bbox":[64,322,108,126]}
+{"kind":"textbox","id":"sh/ydgvehwf","slide":2,"text":"用统计模型和优化算法形成可解释的采购建议","textPreview":"用统计模型和优化算法形成可解释的采购建议","textChars":20,"textLines":1,"bbox":[190,322,248,128]}
+{"kind":"shape","id":"sh/jepw72d0","slide":2,"bbox":[458,320,0,128]}
+{"kind":"textbox","id":"sh/kzidg7el","slide":2,"text":"报价识别与比价","textPreview":"报价识别与比价","textChars":7,"textLines":1,"bbox":[486,326,167.5,28]}
+{"kind":"textbox","id":"sh/l0re9cvq","slide":2,"text":"OCR抽取、口径换算、异常与澄清","textPreview":"OCR抽取、口径换算、异常与澄清","textChars":16,"textLines":1,"bbox":[486,364,167.5,90]}
+{"kind":"shape","id":"sh/a9gvaxw3","slide":2,"bbox":[662.5,324,0,120]}
+{"kind":"textbox","id":"sh/bapw32do","slide":2,"text":"TCO与多元回归","textPreview":"TCO与多元回归","textChars":8,"textLines":1,"bbox":[671.5,326,167.5,28]}
+{"kind":"textbox","id":"sh/wbydc7e9","slide":2,"text":"综合成本、招标预测、模型诊断","textPreview":"综合成本、招标预测、模型诊断","textChars":14,"textLines":1,"bbox":[671.5,364,167.5,90]}
+{"kind":"shape","id":"sh/xc7e5cvu","slide":2,"bbox":[848,324,0,120]}
+{"kind":"textbox","id":"sh/u50fm1wn","slide":2,"text":"需求预测与计划","textPreview":"需求预测与计划","textChars":7,"textLines":1,"bbox":[857,326,167.5,28]}
+{"kind":"textbox","id":"sh/v6twfmd8","slide":2,"text":"预测误差、采购建议、情景模拟","textPreview":"预测误差、采购建议、情景模拟","textChars":14,"textLines":1,"bbox":[857,364,167.5,90]}
+{"kind":"shape","id":"sh/50vy50fa","slide":2,"bbox":[1033.5,324,0,120]}
+{"kind":"textbox","id":"sh/4zmhcvyp","slide":2,"text":"多工厂路径优化","textPreview":"多工厂路径优化","textChars":7,"textLines":1,"bbox":[1042.5,326,167.5,28]}
+{"kind":"textbox","id":"sh/3ydg3qx4","slide":2,"text":"供货分配、路线、批次与中断重算","textPreview":"供货分配、路线、批次与中断重算","textChars":15,"textLines":1,"bbox":[1042.5,364,167.5,90]}
+{"kind":"shape","id":"sh/ixkzalgj","slide":2,"bbox":[42,484,1196,126]}
+{"kind":"textbox","id":"sh/hwby1gfy","slide":2,"text":"03\n管控协同","textPreview":"03 | 管控协同","textChars":7,"textLines":2,"bbox":[64,504,108,88]}
+{"kind":"textbox","id":"sh/gv2h8byt","slide":2,"text":"覆盖供应商、合同与审计，确保结果可复核可追溯","textPreview":"覆盖供应商、合同与审计，确保结果可复核可追溯","textChars":22,"textLines":1,"bbox":[190,504,248,90]}
+{"kind":"shape","id":"sh/vutgz6x8","slide":2,"bbox":[458,502,0,90]}
+{"kind":"textbox","id":"sh/utkz61gn","slide":2,"text":"寻源与供应商","textPreview":"寻源与供应商","textChars":6,"textLines":1,"bbox":[486,508,229.33,28]}
+{"kind":"textbox","id":"sh/1sfidkfi","slide":2,"text":"候选发现、准入、绩效、风险与价值","textPreview":"候选发现、准入、绩效、风险与价值","textChars":16,"textLines":1,"bbox":[486,546,229.33,52]}
+{"kind":"shape","id":"sh/0r6hkfyx","slide":2,"bbox":[724.33,506,0,82]}
+{"kind":"textbox","id":"sh/8bup4fyd","slide":2,"text":"合同智能管理","textPreview":"合同智能管理","textChars":6,"textLines":1,"bbox":[733.33,508,229.33,28]}
+{"kind":"textbox","id":"sh/9w3qdkfy","slide":2,"text":"模板创建、条款审查、履约节点","textPreview":"模板创建、条款审查、履约节点","textChars":14,"textLines":1,"bbox":[733.33,546,229.33,52]}
+{"kind":"shape","id":"sh/m9c725gn","slide":2,"bbox":[971.67,506,0,82]}
+{"kind":"textbox","id":"sh/7alobax8","slide":2,"text":"合规审计","textPreview":"合规审计","textChars":4,"textLines":1,"bbox":[980.67,508,229.33,28]}
+{"kind":"textbox","id":"sh/wzup8fyp","slide":2,"text":"权限、审批、模型版本与全链路留痕","textPreview":"权限、审批、模型版本与全链路留痕","textChars":16,"textLines":1,"bbox":[980.67,546,229.33,52]}
+{"kind":"notes","id":"nt/1sw9dy","slide":2,"text":""}
+{"kind":"slide","id":"sl/joy452","slide":3,"title":"总体能力","textShapes":30}
+{"kind":"textbox","id":"sh/lwvux43a","slide":3,"text":"总体能力","textPreview":"总体能力","textChars":4,"textLines":1,"bbox":[42,30,540,26]}
+{"kind":"textbox","id":"sh/yt4vmp4j","slide":3,"text":"AI不是单点工具，而是贯穿采购闭环的决策助手","textPreview":"AI不是单点工具，而是贯穿采购闭环的决策助手","textChars":22,"textLines":1,"bbox":[42,66,1160,70]}
+{"kind":"shape","id":"sh/zudcvul4","slide":3,"bbox":[42,650,1196,0]}
+{"kind":"textbox","id":"sh/cr2tkzmd","slide":3,"text":"来源：制造业采购AI智能体系统需求规格说明书 V1.1","textPreview":"来源：制造业采购AI智能体系统需求规格说明书 V1.1","textChars":27,"textLines":1,"bbox":[42,662,1000,22]}
+{"kind":"textbox","id":"sh/dsvut43y","slide":3,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[1170,660,68,22]}
+{"kind":"shape","id":"sh/qpkbip4n","slide":3,"bbox":[196,306,64,0]}
+{"kind":"shape","id":"sh/bqtcru58","slide":3,"bbox":[402,306,64,0]}
+{"kind":"shape","id":"sh/wn6dwjmx","slide":3,"bbox":[608,306,64,0]}
+{"kind":"shape","id":"sh/hofu5o3i","slide":3,"bbox":[814,306,64,0]}
+{"kind":"shape","id":"sh/p8zq5wji","slide":3,"bbox":[1020,306,64,0]}
+{"kind":"shape","id":"sh/47q9crix","slide":3,"bbox":[54,226,148,160]}
+{"kind":"textbox","id":"sh/36h83m1s","slide":3,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[70,242,40,24]}
+{"kind":"textbox","id":"sh/25orah07","slide":3,"text":"多源输入","textPreview":"多源输入","textChars":4,"textLines":1,"bbox":[70,278,116,34]}
+{"kind":"textbox","id":"sh/h4fqhcjm","slide":3,"text":"报价单 / 合同\nERP / QMS / 市场","textPreview":"报价单 / 合同 | ERP / QMS / 市场","textChars":23,"textLines":2,"bbox":[70,326,116,48]}
+{"kind":"shape","id":"sh/g36987i1","slide":3,"bbox":[260,226,148,160]}
+{"kind":"textbox","id":"sh/f2x8f21g","slide":3,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[276,242,40,24]}
+{"kind":"textbox","id":"sh/u1or6h0v","slide":3,"text":"识别标准化","textPreview":"识别标准化","textChars":5,"textLines":1,"bbox":[276,278,116,34]}
+{"kind":"textbox","id":"sh/10jadgjq","slide":3,"text":"OCR抽取\n主数据与口径统一","textPreview":"OCR抽取 | 主数据与口径统一","textChars":14,"textLines":2,"bbox":[276,326,116,48]}
+{"kind":"shape","id":"sh/0za9kbi5","slide":3,"bbox":[466,226,148,160]}
+{"kind":"textbox","id":"sh/k3itgfqh","slide":3,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[482,242,40,24]}
+{"kind":"textbox","id":"sh/l4rupk72","slide":3,"text":"数据与知识","textPreview":"数据与知识","textChars":5,"textLines":1,"bbox":[482,278,116,34]}
+{"kind":"textbox","id":"sh/y10be58b","slide":3,"text":"历史采购\n供应商360 / 制度","textPreview":"历史采购 | 供应商360 / 制度","textChars":16,"textLines":2,"bbox":[482,326,116,48]}
+{"kind":"shape","id":"sh/z29snapw","slide":3,"bbox":[672,226,148,160]}
+{"kind":"textbox","id":"sh/cfytcfql","slide":3,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[688,242,40,24]}
+{"kind":"textbox","id":"sh/xg7alkrq","slide":3,"text":"模型与求解","textPreview":"模型与求解","textChars":5,"textLines":1,"bbox":[688,278,116,34]}
+{"kind":"textbox","id":"sh/adgba58f","slide":3,"text":"回归 / 预测\nTCO / 路径优化","textPreview":"回归 / 预测 | TCO / 路径优化","textChars":18,"textLines":2,"bbox":[688,326,116,48]}
+{"kind":"shape","id":"sh/bepsja90","slide":3,"bbox":[878,226,148,160]}
+{"kind":"textbox","id":"sh/obyt8vq9","slide":3,"text":"05","textPreview":"05","textChars":2,"textLines":1,"bbox":[894,242,40,24]}
+{"kind":"textbox","id":"sh/pc7ah0ru","slide":3,"text":"决策输出","textPreview":"决策输出","textChars":4,"textLines":1,"bbox":[894,278,116,34]}
+{"kind":"textbox","id":"sh/r65crqtg","slide":3,"text":"自动比价\n排序 / 风险 / 建议","textPreview":"自动比价 | 排序 / 风险 / 建议","textChars":17,"textLines":2,"bbox":[894,326,116,48]}
+{"kind":"shape","id":"sh/q5wbilsb","slide":3,"bbox":[1084,226,148,160]}
+{"kind":"textbox","id":"sh/d8nut0bm","slide":3,"text":"06","textPreview":"06","textChars":2,"textLines":1,"bbox":[1100,242,40,24]}
+{"kind":"textbox","id":"sh/s7etkva1","slide":3,"text":"人工确认","textPreview":"人工确认","textChars":4,"textLines":1,"bbox":[1100,278,116,34]}
+{"kind":"textbox","id":"sh/fapcvats","slide":3,"text":"审批 / 回写\n版本 / 审计","textPreview":"审批 / 回写 | 版本 / 审计","textChars":15,"textLines":2,"bbox":[1100,326,116,48]}
+{"kind":"textbox","id":"sh/e9wbm5s7","slide":3,"text":"六类核心工作台","textPreview":"六类核心工作台","textChars":7,"textLines":1,"bbox":[54,448,240,32]}
+{"kind":"shape","id":"sh/1c7ux0by","slide":3,"bbox":[54,498,164,36]}
+{"kind":"textbox","id":"sh/0bydofad","slide":3,"text":"市场洞察","textPreview":"市场洞察","textChars":4,"textLines":1,"bbox":[64,505,144,22]}
+{"kind":"shape","id":"sh/nepczato","slide":3,"bbox":[246,498,164,36]}
+{"kind":"textbox","id":"sh/2dgvq5sj","slide":3,"text":"需求计划","textPreview":"需求计划","textChars":4,"textLines":1,"bbox":[256,505,144,22]}
+{"kind":"shape","id":"sh/mt8nid4r","slide":3,"bbox":[438,498,164,36]}
+{"kind":"textbox","id":"sh/7uhobi5c","slide":3,"text":"寻源比价","textPreview":"寻源比价","textChars":4,"textLines":1,"bbox":[448,505,144,22]}
+{"kind":"shape","id":"sh/8vq5knmx","slide":3,"bbox":[630,498,164,36]}
+{"kind":"textbox","id":"sh/9wz6dsni","slide":3,"text":"成本分析","textPreview":"成本分析","textChars":4,"textLines":1,"bbox":[640,505,144,22]}
+{"kind":"shape","id":"sh/ux8nmx4n","slide":3,"bbox":[822,498,164,36]}
+{"kind":"textbox","id":"sh/vihofi58","slide":3,"text":"供应商管理","textPreview":"供应商管理","textChars":5,"textLines":1,"bbox":[832,505,144,22]}
+{"kind":"shape","id":"sh/gja5onmt","slide":3,"bbox":[1014,498,164,36]}
+{"kind":"textbox","id":"sh/hkj6hsne","slide":3,"text":"合同履约","textPreview":"合同履约","textChars":4,"textLines":1,"bbox":[1024,505,144,22]}
+{"kind":"textbox","id":"sh/a1onat4j","slide":3,"text":"关键原则：结构化计算由统计模型和优化算法完成；AI负责理解任务、调用工具并解释结果。","textPreview":"关键原则：结构化计算由统计模型和优化算法完成；AI负责理解任务、调用工具并解释结果。","textChars":42,"textLines":1,"bbox":[54,574,1120,34]}
+{"kind":"notes","id":"nt/joy452","slide":3,"text":""}
+{"kind":"slide","id":"sl/h31xqr","slide":4,"title":"亮点 01｜报价单识别与自动比价","textShapes":43}
+{"kind":"textbox","id":"sh/j6d8zqps","slide":4,"text":"亮点 01｜报价单识别与自动比价","textPreview":"亮点 01｜报价单识别与自动比价","textChars":16,"textLines":1,"bbox":[42,30,540,26]}
+{"kind":"textbox","id":"sh/krmpsvqd","slide":4,"text":"报价单识别后自动统一口径，比价从“抄表”变成“审差异”","textPreview":"报价单识别后自动统一口径，比价从“抄表”变成“审差异”","textChars":27,"textLines":1,"bbox":[42,66,1160,70]}
+{"kind":"shape","id":"sh/5sfq107y","slide":4,"bbox":[42,650,1196,0]}
+{"kind":"textbox","id":"sh/a147m18b","slide":4,"text":"来源：制造业采购AI智能体系统需求规格说明书 V1.1","textPreview":"来源：制造业采购AI智能体系统需求规格说明书 V1.1","textChars":27,"textLines":1,"bbox":[42,662,1000,22]}
+{"kind":"textbox","id":"sh/v2dov6pg","slide":4,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[1170,660,68,22]}
+{"kind":"textbox","id":"sh/w3mpobq1","slide":4,"text":"上传即处理","textPreview":"上传即处理","textChars":5,"textLines":1,"bbox":[42,148,250,30]}
+{"kind":"shape","id":"sh/x4v6xg7m","slide":4,"bbox":[96,267,0,28]}
+{"kind":"shape","id":"sh/uxo7y58f","slide":4,"bbox":[96,359,0,28]}
+{"kind":"shape","id":"sh/fyx87ap0","slide":4,"bbox":[96,451,0,28]}
+{"kind":"shape","id":"sh/zydsfetw","slide":4,"bbox":[42,200,328,66]}
+{"kind":"textbox","id":"sh/ex4rm9cb","slide":4,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[58,214,40,22]}
+{"kind":"textbox","id":"sh/10fahob2","slide":4,"text":"识别","textPreview":"识别","textChars":2,"textLines":1,"bbox":[106,210,76,28]}
+{"kind":"textbox","id":"sh/0z69ojuh","slide":4,"text":"PDF / Excel / 图片 / 扫描件","textPreview":"PDF / Excel / 图片 / 扫描件","textChars":22,"textLines":1,"bbox":[184,212,168,38]}
+{"kind":"shape","id":"sh/n2xsjyt8","slide":4,"bbox":[42,292,328,66]}
+{"kind":"textbox","id":"sh/m1orqtcn","slide":4,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[58,306,40,22]}
+{"kind":"textbox","id":"sh/94fal8by","slide":4,"text":"抽取","textPreview":"抽取","textChars":2,"textLines":1,"bbox":[106,302,76,28]}
+{"kind":"textbox","id":"sh/o36ts3ut","slide":4,"text":"物料、规格、价格、交期、条款","textPreview":"物料、规格、价格、交期、条款","textChars":14,"textLines":1,"bbox":[184,304,168,38]}
+{"kind":"shape","id":"sh/b6xsnyt4","slide":4,"bbox":[42,384,328,66]}
+{"kind":"textbox","id":"sh/a5obutsj","slide":4,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[58,398,40,22]}
+{"kind":"textbox","id":"sh/61svmxwr","slide":4,"text":"标准化","textPreview":"标准化","textChars":3,"textLines":1,"bbox":[106,394,76,28]}
+{"kind":"textbox","id":"sh/721cf2dc","slide":4,"text":"币种、税率、单位、MOQ、运费","textPreview":"币种、税率、单位、MOQ、运费","textChars":15,"textLines":1,"bbox":[184,396,168,38]}
+{"kind":"shape","id":"sh/8nado7ux","slide":4,"bbox":[42,476,328,66]}
+{"kind":"textbox","id":"sh/tojuhcvi","slide":4,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[58,490,40,22]}
+{"kind":"textbox","id":"sh/yx8vixwv","slide":4,"text":"校验","textPreview":"校验","textChars":2,"textLines":1,"bbox":[106,486,76,28]}
+{"kind":"textbox","id":"sh/jyhcb2dg","slide":4,"text":"缺项、异常价、规格差异、低置信度","textPreview":"缺项、异常价、规格差异、低置信度","textChars":16,"textLines":1,"bbox":[184,488,168,38]}
+{"kind":"textbox","id":"sh/kzadk7e1","slide":4,"text":"自动比价结果（示例）","textPreview":"自动比价结果（示例）","textChars":10,"textLines":1,"bbox":[414,148,430,30]}
+{"kind":"shape","id":"sh/l0judsv6","slide":4,"bbox":[414,196,162,56]}
+{"kind":"textbox","id":"sh/2tcvuhcz","slide":4,"text":"供应商","textPreview":"供应商","textChars":3,"textLines":1,"bbox":[422,210,146,28]}
+{"kind":"shape","id":"sh/3ulwnmdk","slide":4,"bbox":[576,196,136,56]}
+{"kind":"textbox","id":"sh/donydgfm","slide":4,"text":"报价/件","textPreview":"报价/件","textChars":4,"textLines":1,"bbox":[584,210,120,28]}
+{"kind":"shape","id":"sh/cnexkve1","slide":4,"bbox":[712,196,130,56]}
+{"kind":"textbox","id":"sh/rm5gbqxw","slide":4,"text":"到厂价","textPreview":"到厂价","textChars":3,"textLines":1,"bbox":[720,210,114,28]}
+{"kind":"shape","id":"sh/qlwfilgb","slide":4,"bbox":[842,196,130,56]}
+{"kind":"textbox","id":"sh/pknypgfq","slide":4,"text":"交期","textPreview":"交期","textChars":2,"textLines":1,"bbox":[850,210,114,28]}
+{"kind":"shape","id":"sh/4jexgby5","slide":4,"bbox":[972,196,130,56]}
+{"kind":"textbox","id":"sh/3i5gn6xk","slide":4,"text":"质量","textPreview":"质量","textChars":2,"textLines":1,"bbox":[980,210,114,28]}
+{"kind":"shape","id":"sh/2hcfe1gz","slide":4,"bbox":[1102,196,136,56]}
+{"kind":"textbox","id":"sh/9g7yl0fu","slide":4,"text":"综合结论","textPreview":"综合结论","textChars":4,"textLines":1,"bbox":[1110,210,120,28]}
+{"kind":"shape","id":"sh/ofyhsfe9","slide":4,"bbox":[414,254,162,56]}
+{"kind":"textbox","id":"sh/gzmpsfe5","slide":4,"text":"供应商A","textPreview":"供应商A","textChars":4,"textLines":1,"bbox":[422,268,146,28]}
+{"kind":"shape","id":"sh/h0v6l0fq","slide":4,"bbox":[576,254,136,56]}
+{"kind":"textbox","id":"sh/ux4nq5wz","slide":4,"text":"¥ 96","textPreview":"¥ 96","textChars":4,"textLines":1,"bbox":[584,268,120,28]}
+{"kind":"shape","id":"sh/vydojaxk","slide":4,"bbox":[712,254,130,56]}
+{"kind":"textbox","id":"sh/4n6pgfe1","slide":4,"text":"¥ 101","textPreview":"¥ 101","textChars":5,"textLines":1,"bbox":[720,268,114,28]}
+{"kind":"shape","id":"sh/5of6pkfm","slide":4,"bbox":[842,254,130,56]}
+{"kind":"textbox","id":"sh/ilo7u5wb","slide":4,"text":"18天","textPreview":"18天","textChars":3,"textLines":1,"bbox":[850,268,114,28]}
+{"kind":"shape","id":"sh/3mxonaxg","slide":4,"bbox":[972,254,130,56]}
+{"kind":"textbox","id":"sh/sr6pkzed","slide":4,"text":"98.5%","textPreview":"98.5%","textChars":5,"textLines":1,"bbox":[980,268,114,28]}
+{"kind":"shape","id":"sh/dsz6tkfy","slide":4,"bbox":[1102,254,136,56]}
+{"kind":"textbox","id":"sh/nm1sjyh0","slide":4,"text":"最低报价","textPreview":"最低报价","textChars":4,"textLines":1,"bbox":[1110,268,120,28]}
+{"kind":"shape","id":"sh/2lsrqtgf","slide":4,"bbox":[414,312,162,56]}
+{"kind":"textbox","id":"sh/pojaloz6","slide":4,"text":"供应商B","textPreview":"供应商B","textChars":4,"textLines":1,"bbox":[422,326,146,28]}
+{"kind":"shape","id":"sh/ona9s3yl","slide":4,"bbox":[576,312,136,56]}
+{"kind":"textbox","id":"sh/fih8feho","slide":4,"text":"¥ 99","textPreview":"¥ 99","textChars":4,"textLines":1,"bbox":[584,326,120,28]}
+{"kind":"shape","id":"sh/eh8rm9gj","slide":4,"bbox":[712,312,130,56]}
+{"kind":"textbox","id":"sh/1kjqhozu","slide":4,"text":"¥ 100","textPreview":"¥ 100","textChars":5,"textLines":1,"bbox":[720,326,114,28]}
+{"kind":"shape","id":"sh/0jq9ojy9","slide":4,"bbox":[842,312,130,56]}
+{"kind":"textbox","id":"sh/zelsrih8","slide":4,"text":"14天","textPreview":"14天","textChars":3,"textLines":1,"bbox":[850,326,114,28]}
+{"kind":"shape","id":"sh/ydcrydgn","slide":4,"bbox":[972,312,130,56]}
+{"kind":"textbox","id":"sh/u9wvqh0v","slide":4,"text":"99.2%","textPreview":"99.2%","textChars":5,"textLines":1,"bbox":[980,326,114,28]}
+{"kind":"shape","id":"sh/va5cjm1g","slide":4,"bbox":[1102,312,136,56]}
+{"kind":"textbox","id":"sh/wbyds7i1","slide":4,"text":"最低TCO","textPreview":"最低TCO","textChars":5,"textLines":1,"bbox":[1110,326,120,28]}
+{"kind":"shape","id":"sh/hc7ulcj6","slide":4,"bbox":[414,370,162,56]}
+{"kind":"textbox","id":"sh/idgvuh0r","slide":4,"text":"供应商C","textPreview":"供应商C","textChars":4,"textLines":1,"bbox":[422,384,146,28]}
+{"kind":"shape","id":"sh/3epcnm1c","slide":4,"bbox":[576,370,136,56]}
+{"kind":"textbox","id":"sh/4fydwrix","slide":4,"text":"¥ 94","textPreview":"¥ 94","textChars":4,"textLines":1,"bbox":[584,384,120,28]}
+{"kind":"shape","id":"sh/507upwji","slide":4,"bbox":[712,370,130,56]}
+{"kind":"textbox","id":"sh/yhcbix0n","slide":4,"text":"¥ 105","textPreview":"¥ 105","textChars":5,"textLines":1,"bbox":[720,384,114,28]}
+{"kind":"shape","id":"sh/zilcb218","slide":4,"bbox":[842,370,130,56]}
+{"kind":"textbox","id":"sh/1wbyh03q","slide":4,"text":"26天","textPreview":"26天","textChars":3,"textLines":1,"bbox":[850,384,114,28]}
+{"kind":"shape","id":"sh/0v2xov25","slide":4,"bbox":[972,370,130,56]}
+{"kind":"textbox","id":"sh/futwfqlk","slide":4,"text":"97.8%","textPreview":"97.8%","textChars":5,"textLines":1,"bbox":[980,384,114,28]}
+{"kind":"shape","id":"sh/e90fmlkz","slide":4,"bbox":[1102,370,136,56]}
+{"kind":"textbox","id":"sh/p0byl03m","slide":4,"text":"需澄清","textPreview":"需澄清","textChars":3,"textLines":1,"bbox":[1110,384,120,28]}
+{"kind":"shape","id":"sh/nytgjqlw","slide":4,"bbox":[904,146,334,36]}
+{"kind":"textbox","id":"sh/2xkfq5kb","slide":4,"text":"输出：最低报价 / 最低TCO / 最高综合分 / 最低风险","textPreview":"输出：最低报价 / 最低TCO / 最高综合分 / 最低风险","textChars":30,"textLines":1,"bbox":[914,153,314,22]}
+{"kind":"chart","id":"ch/s3apk3qh","slide":4,"name":"","chartType":"bar","bbox":[414,448,694,170]}
+{"kind":"notes","id":"nt/h31xqr","slide":4,"text":""}
+{"kind":"slide","id":"sl/15p7yd","slide":5,"title":"亮点 02｜采购成本核算 + 多元回归","textShapes":22}
+{"kind":"textbox","id":"sh/0nypory5","slide":5,"text":"亮点 02｜采购成本核算 + 多元回归","textPreview":"亮点 02｜采购成本核算 + 多元回归","textChars":19,"textLines":1,"bbox":[42,30,540,26]}
+{"kind":"textbox","id":"sh/zmpov6hk","slide":5,"text":"把单价、交付、质量与服务转化为可预测的实际采购成本","textPreview":"把单价、交付、质量与服务转化为可预测的实际采购成本","textChars":25,"textLines":1,"bbox":[42,66,1160,70]}
+{"kind":"shape","id":"sh/elg7m1gz","slide":5,"bbox":[42,650,1196,0]}
+{"kind":"textbox","id":"sh/9crq1gzm","slide":5,"text":"来源：制造业采购AI智能体系统需求规格说明书 V1.1","textPreview":"来源：制造业采购AI智能体系统需求规格说明书 V1.1","textChars":27,"textLines":1,"bbox":[42,662,1000,22]}
+{"kind":"textbox","id":"sh/obipsby1","slide":5,"text":"05","textPreview":"05","textChars":2,"textLines":1,"bbox":[1170,660,68,22]}
+{"kind":"textbox","id":"sh/na98z6hw","slide":5,"text":"TCO综合成本口径","textPreview":"TCO综合成本口径","textChars":9,"textLines":1,"bbox":[42,150,280,30]}
+{"kind":"shape","id":"sh/mp07q1gb","slide":5,"bbox":[42,192,520,86]}
+{"kind":"textbox","id":"sh/pgn6pczi","slide":5,"text":"TCO =","textPreview":"TCO =","textChars":5,"textLines":1,"bbox":[66,214,86,30]}
+{"kind":"textbox","id":"sh/4fepg7yx","slide":5,"text":"采购金额 + 物流 + 资金 + 延期 + 质量\n+ 服务损失 + 企业认可的其他成本","textPreview":"采购金额 + 物流 + 资金 + 延期 + 质量 | + 服务损失 + 企业认可的其他成本","textChars":43,"textLines":2,"bbox":[154,204,378,54]}
+{"kind":"textbox","id":"sh/yxc7qx0v","slide":5,"text":"多元一次回归方程","textPreview":"多元一次回归方程","textChars":8,"textLines":1,"bbox":[42,306,280,30]}
+{"kind":"shape","id":"sh/jyl8z210","slide":5,"bbox":[42,348,520,136]}
+{"kind":"textbox","id":"sh/kzups7il","slide":5,"text":"Ŷ实际采购成本 = β₀ + β₁×采购价格\n+ β₂×延期天数 + β₃×响应时间\n+ β₄×不良率 + β₅×返修率\n+ β₆×物流成本 + β₇×付款成本","textPreview":"Ŷ实际采购成本 = β₀ + β₁×采购价格 | + β₂×延期天数 + β₃×响应时间 | + β₄×不良率 + β₅×返修率 | + β₆×物流成本 + β₇×付款成本","textChars":80,"textLines":4,"bbox":[66,366,470,104]}
+{"kind":"textbox","id":"sh/l03q1cj6","slide":5,"text":"模型输入","textPreview":"模型输入","textChars":4,"textLines":1,"bbox":[42,514,126,28]}
+{"kind":"shape","id":"sh/61c7uh0r","slide":5,"bbox":[42,554,64,36]}
+{"kind":"textbox","id":"sh/7ml83m1c","slide":5,"text":"价格","textPreview":"价格","textChars":2,"textLines":1,"bbox":[52,561,44,22]}
+{"kind":"shape","id":"sh/8nupwrix","slide":5,"bbox":[116,554,64,36]}
+{"kind":"textbox","id":"sh/tonq5cji","slide":5,"text":"延期","textPreview":"延期","textChars":2,"textLines":1,"bbox":[126,561,44,22]}
+{"kind":"shape","id":"sh/upw7yh0n","slide":5,"bbox":[190,554,64,36]}
+{"kind":"textbox","id":"sh/vq587mh8","slide":5,"text":"响应","textPreview":"响应","textChars":2,"textLines":1,"bbox":[200,561,44,22]}
+{"kind":"shape","id":"sh/ru5ofmxg","slide":5,"bbox":[264,554,64,36]}
+{"kind":"textbox","id":"sh/qtw7mhgv","slide":5,"text":"不良率","textPreview":"不良率","textChars":3,"textLines":1,"bbox":[274,561,44,22]}
+{"kind":"shape","id":"sh/dw76hwfm","slide":5,"bbox":[338,554,64,36]}
+{"kind":"textbox","id":"sh/cvypory1","slide":5,"text":"返修率","textPreview":"返修率","textChars":3,"textLines":1,"bbox":[348,561,44,22]}
+{"kind":"shape","id":"sh/3q5obmxk","slide":5,"bbox":[412,554,64,36]}
+{"kind":"textbox","id":"sh/ipwnihgz","slide":5,"text":"物流","textPreview":"物流","textChars":2,"textLines":1,"bbox":[422,561,44,22]}
+{"kind":"shape","id":"sh/psn6dwfa","slide":5,"bbox":[486,554,64,36]}
+{"kind":"textbox","id":"sh/4repkry5","slide":5,"text":"付款","textPreview":"付款","textChars":2,"textLines":1,"bbox":[496,561,44,22]}
+{"kind":"textbox","id":"sh/v2lo72x8","slide":5,"text":"输出：预测成本区间、供应商排序、系数影响与敏感性分析","textPreview":"输出：预测成本区间、供应商排序、系数影响与敏感性分析","textChars":26,"textLines":1,"bbox":[42,606,520,26]}
+{"kind":"textbox","id":"sh/u1cnexgn","slide":5,"text":"回归拟合曲线（示例）","textPreview":"回归拟合曲线（示例）","textChars":10,"textLines":1,"bbox":[618,150,360,30]}
+{"kind":"shape","id":"sh/lwzu1oru","slide":5,"bbox":[618,514,620,108]}
+{"kind":"textbox","id":"sh/yt8vq9sj","slide":5,"text":"模型诊断与应用","textPreview":"模型诊断与应用","textChars":7,"textLines":1,"bbox":[642,534,180,28]}
+{"kind":"textbox","id":"sh/zuhcze9o","slide":5,"text":"诊断：样本量、共线性、R²、MAE、置信区间、稳定性\n应用：招标成本预测、供应商排序、小样本规则评分兜底","textPreview":"诊断：样本量、共线性、R²、MAE、置信区间、稳定性 | 应用：招标成本预测、供应商排序、小样本规则评分兜底","textChars":52,"textLines":2,"bbox":[642,568,560,46]}
+{"kind":"textbox","id":"sh/8jadwjal","slide":5,"text":"曲线数据为演示示例；正式模型以客户数据和确认口径训练。","textPreview":"曲线数据为演示示例；正式模型以客户数据和确认口径训练。","textChars":27,"textLines":1,"bbox":[824,624,414,18]}
+{"kind":"chart","id":"ch/sfe5gbqp","slide":5,"name":"","chartType":"line","bbox":[618,190,620,302]}
+{"kind":"notes","id":"nt/15p7yd","slide":5,"text":""}
+{"kind":"slide","id":"sl/q785ft","slide":6,"title":"亮点 03｜供货分配与交货路径优化","textShapes":31}
+{"kind":"textbox","id":"sh/h4v6pcbu","slide":6,"text":"亮点 03｜供货分配与交货路径优化","textPreview":"亮点 03｜供货分配与交货路径优化","textChars":17,"textLines":1,"bbox":[42,30,540,26]}
+{"kind":"textbox","id":"sh/u14nuxc3","slide":6,"text":"多工厂供货路径优化，在成本、交期与风险之间求最优解","textPreview":"多工厂供货路径优化，在成本、交期与风险之间求最优解","textChars":25,"textLines":1,"bbox":[42,66,1160,70]}
+{"kind":"shape","id":"sh/v2don2to","slide":6,"bbox":[42,650,1196,0]}
+{"kind":"textbox","id":"sh/8z25s7ux","slide":6,"text":"来源：制造业采购AI智能体系统需求规格说明书 V1.1","textPreview":"来源：制造业采购AI智能体系统需求规格说明书 V1.1","textChars":27,"textLines":1,"bbox":[42,662,1000,22]}
+{"kind":"textbox","id":"sh/t0vmlsbi","slide":6,"text":"06","textPreview":"06","textChars":2,"textLines":1,"bbox":[1170,660,68,22]}
+{"kind":"shape","id":"sh/6xknqxc7","slide":6,"bbox":[198,232,250,58]}
+{"kind":"shape","id":"sh/7yt4j2ts","slide":6,"bbox":[198,290,250,36]}
+{"kind":"shape","id":"sh/kb25onu1","slide":6,"bbox":[198,290,250,130]}
+{"kind":"shape","id":"sh/lcbmhsbm","slide":6,"bbox":[554,218,218,70]}
+{"kind":"shape","id":"sh/x036l4r6","slide":6,"bbox":[554,288,218,78]}
+{"kind":"shape","id":"sh/wzupszal","slide":6,"bbox":[554,288,218,176]}
+{"kind":"shape","id":"sh/vyloju90","slide":6,"bbox":[554,366,218,82]}
+{"kind":"shape","id":"sh/axs7qpsv","slide":6,"bbox":[554,448,218,16]}
+{"kind":"textbox","id":"sh/9wj6hkra","slide":6,"text":"供应端","textPreview":"供应端","textChars":3,"textLines":1,"bbox":[42,154,180,28]}
+{"kind":"textbox","id":"sh/8vapofap","slide":6,"text":"网络节点","textPreview":"网络节点","textChars":4,"textLines":1,"bbox":[424,154,180,28]}
+{"kind":"textbox","id":"sh/na1ofa94","slide":6,"text":"需求端","textPreview":"需求端","textChars":3,"textLines":1,"bbox":[784,154,180,28]}
+{"kind":"shape","id":"sh/m9snmpsj","slide":6,"bbox":[42,202,156,58]}
+{"kind":"textbox","id":"sh/l8j6dkry","slide":6,"text":"供应商S1","textPreview":"供应商S1","textChars":5,"textLines":1,"bbox":[58,219,124,24]}
+{"kind":"shape","id":"sh/07a5kfad","slide":6,"bbox":[42,296,156,58]}
+{"kind":"textbox","id":"sh/cbep0fi9","slide":6,"text":"供应商S2","textPreview":"供应商S2","textChars":5,"textLines":1,"bbox":[58,313,124,24]}
+{"kind":"shape","id":"sh/dcn6tkzu","slide":6,"bbox":[42,390,156,58]}
+{"kind":"textbox","id":"sh/qpc7y50j","slide":6,"text":"供应商S3","textPreview":"供应商S3","textChars":5,"textLines":1,"bbox":[58,407,124,24]}
+{"kind":"shape","id":"sh/raloraho","slide":6,"bbox":[448,256,106,68]}
+{"kind":"textbox","id":"sh/4nupwvid","slide":6,"text":"区域仓","textPreview":"区域仓","textChars":3,"textLines":1,"bbox":[460,277,82,26]}
+{"kind":"shape","id":"sh/po36p0zy","slide":6,"bbox":[448,414,106,68]}
+{"kind":"textbox","id":"sh/2lc7u507","slide":6,"text":"中转仓","textPreview":"中转仓","textChars":3,"textLines":1,"bbox":[460,435,82,26]}
+{"kind":"shape","id":"sh/3mlonahs","slide":6,"bbox":[772,190,144,58]}
+{"kind":"textbox","id":"sh/ojyp8zih","slide":6,"text":"工厂A","textPreview":"工厂A","textChars":3,"textLines":1,"bbox":[790,207,108,24]}
+{"kind":"shape","id":"sh/9k7q14z2","slide":6,"bbox":[772,338,144,58]}
+{"kind":"textbox","id":"sh/je9sry14","slide":6,"text":"工厂B","textPreview":"工厂B","textChars":3,"textLines":1,"bbox":[790,355,108,24]}
+{"kind":"shape","id":"sh/yd0rytkj","slide":6,"bbox":[772,436,144,58]}
+{"kind":"textbox","id":"sh/l0rat8ja","slide":6,"text":"工厂C","textPreview":"工厂C","textChars":3,"textLines":1,"bbox":[790,453,108,24]}
+{"kind":"shape","id":"sh/kfi9032p","slide":6,"bbox":[626,204,82,36]}
+{"kind":"textbox","id":"sh/72tsvi1g","slide":6,"text":"直送","textPreview":"直送","textChars":2,"textLines":1,"bbox":[636,211,62,22]}
+{"kind":"shape","id":"sh/610r2dkv","slide":6,"bbox":[620,356,82,36]}
+{"kind":"textbox","id":"sh/t4bax8jm","slide":6,"text":"集货","textPreview":"集货","textChars":2,"textLines":1,"bbox":[630,363,62,22]}
+{"kind":"shape","id":"sh/83294321","slide":6,"bbox":[620,470,82,36]}
+{"kind":"textbox","id":"sh/n6p8je1w","slide":6,"text":"中转","textPreview":"中转","textChars":2,"textLines":1,"bbox":[630,477,62,22]}
+{"kind":"shape","id":"sh/m5grq9kr","slide":6,"bbox":[960,158,278,400]}
+{"kind":"textbox","id":"sh/e14jmdwj","slide":6,"text":"优化目标","textPreview":"优化目标","textChars":4,"textLines":1,"bbox":[988,184,180,30]}
+{"kind":"textbox","id":"sh/z2d0vid4","slide":6,"text":"总成本","textPreview":"总成本","textChars":3,"textLines":1,"bbox":[988,234,78,24]}
+{"kind":"textbox","id":"sh/03m1onep","slide":6,"text":"采购 + 运费 + 仓储","textPreview":"采购 + 运费 + 仓储","textChars":12,"textLines":1,"bbox":[1072,234,140,34]}
+{"kind":"textbox","id":"sh/14vixsva","slide":6,"text":"交期","textPreview":"交期","textChars":2,"textLines":1,"bbox":[988,302,78,24]}
+{"kind":"textbox","id":"sh/m54jqdwv","slide":6,"text":"时效 + 批次 + 频率","textPreview":"时效 + 批次 + 频率","textChars":12,"textLines":1,"bbox":[1072,302,140,34]}
+{"kind":"textbox","id":"sh/n6d0zidg","slide":6,"text":"风险","textPreview":"风险","textChars":2,"textLines":1,"bbox":[988,370,78,24]}
+{"kind":"textbox","id":"sh/orm1snel","slide":6,"text":"产能 + 中断 + 单一来源","textPreview":"产能 + 中断 + 单一来源","textChars":14,"textLines":1,"bbox":[1072,370,140,34]}
+{"kind":"textbox","id":"sh/9svi1sv6","slide":6,"text":"碳排","textPreview":"碳排","textChars":2,"textLines":1,"bbox":[988,438,78,24]}
+{"kind":"textbox","id":"sh/atojuxwr","slide":6,"text":"距离 + 车型 + 装载率","textPreview":"距离 + 车型 + 装载率","textChars":13,"textLines":1,"bbox":[1072,438,140,34]}
+{"kind":"shape","id":"sh/buxk32dc","slide":6,"bbox":[988,510,224,0]}
+{"kind":"textbox","id":"sh/lozmtwfe","slide":6,"text":"异常发生后自动重算","textPreview":"异常发生后自动重算","textChars":9,"textLines":1,"bbox":[988,526,224,24]}
+{"kind":"shape","id":"sh/knql0ryt","slide":6,"bbox":[42,558,874,64]}
+{"kind":"textbox","id":"sh/jmh4rmxo","slide":6,"text":"示例建议","textPreview":"示例建议","textChars":4,"textLines":1,"bbox":[62,578,92,24]}
+{"kind":"textbox","id":"sh/yl83yhg3","slide":6,"text":"S2 → 区域仓 → 工厂A/B；S1直送工厂C；保留S3作为中断备选。","textPreview":"S2 → 区域仓 → 工厂A/B；S1直送工厂C；保留S3作为中断备选。","textChars":36,"textLines":1,"bbox":[160,574,730,32]}
+{"kind":"textbox","id":"sh/tsjmxwfq","slide":6,"text":"示意网络，仅用于说明优化能力。","textPreview":"示意网络，仅用于说明优化能力。","textChars":15,"textLines":1,"bbox":[988,584,224,20]}
+{"kind":"notes","id":"nt/q785ft","slide":6,"text":""}
+{"kind":"slide","id":"sl/0lpd03","slide":7,"title":"亮点 04｜AI辅助采购","textShapes":25}
+{"kind":"textbox","id":"sh/tk765076","slide":7,"text":"亮点 04｜AI辅助采购","textPreview":"亮点 04｜AI辅助采购","textChars":12,"textLines":1,"bbox":[42,30,540,26]}
+{"kind":"textbox","id":"sh/6hgnulof","slide":7,"text":"一个对话入口，完成查数、修正、优化与报告生成","textPreview":"一个对话入口，完成查数、修正、优化与报告生成","textChars":22,"textLines":1,"bbox":[42,66,1160,70]}
+{"kind":"shape","id":"sh/7ip43qp0","slide":7,"bbox":[42,650,1196,0]}
+{"kind":"textbox","id":"sh/kfe5sv6p","slide":7,"text":"来源：制造业采购AI智能体系统需求规格说明书 V1.1","textPreview":"来源：制造业采购AI智能体系统需求规格说明书 V1.1","textChars":27,"textLines":1,"bbox":[42,662,1000,22]}
+{"kind":"textbox","id":"sh/5g7m1g7a","slide":7,"text":"07","textPreview":"07","textChars":2,"textLines":1,"bbox":[1170,660,68,22]}
+{"kind":"shape","id":"sh/itwnql8j","slide":7,"bbox":[42,152,620,454]}
+{"kind":"textbox","id":"sh/je54zqp4","slide":7,"text":"采购经理","textPreview":"采购经理","textChars":4,"textLines":1,"bbox":[66,174,116,24]}
+{"kind":"shape","id":"sh/4bi54f6t","slide":7,"bbox":[66,208,470,64]}
+{"kind":"textbox","id":"sh/pcr6dk7e","slide":7,"text":"比较三家投标报价，按TCO重新排序，\n并解释为什么不是最低单价中标。","textPreview":"比较三家投标报价，按TCO重新排序， | 并解释为什么不是最低单价中标。","textChars":34,"textLines":2,"bbox":[86,222,430,40]}
+{"kind":"textbox","id":"sh/xkve5of2","slide":7,"text":"AI采购助手","textPreview":"AI采购助手","textChars":6,"textLines":1,"bbox":[66,300,140,24]}
+{"kind":"shape","id":"sh/cj2dcjeh","slide":7,"bbox":[66,334,562,156]}
+{"kind":"textbox","id":"sh/bytw3exw","slide":7,"text":"已完成：","textPreview":"已完成：","textChars":4,"textLines":1,"bbox":[88,352,100,24]}
+{"kind":"textbox","id":"sh/axkva9wr","slide":7,"text":"1. 读取报价与历史交付、质量数据\n2. 统一币种、税率、物流与付款口径\n3. 调用TCO与回归模型计算并完成诊断\n4. 生成供应商排序、依据与风险提示","textPreview":"1. 读取报价与历史交付、质量数据 | 2. 统一币种、税率、物流与付款口径 | 3. 调用TCO与回归模型计算并完成诊断 | 4. 生成供应商排序、依据与风险提示","textChars":76,"textLines":4,"bbox":[88,382,508,94]}
+{"kind":"shape","id":"sh/pwbe14f6","slide":7,"bbox":[66,514,562,64]}
+{"kind":"textbox","id":"sh/ov2d8zel","slide":7,"text":"下一步：生成《招标比价说明》并提交复核？","textPreview":"下一步：生成《招标比价说明》并提交复核？","textChars":20,"textLines":1,"bbox":[86,534,430,26]}
+{"kind":"shape","id":"sh/nutwzex0","slide":7,"bbox":[492,526,116,36]}
+{"kind":"textbox","id":"sh/2tkv69wf","slide":7,"text":"预览报告","textPreview":"预览报告","textChars":4,"textLines":1,"bbox":[502,533,96,22]}
+{"kind":"textbox","id":"sh/9sfed8fa","slide":7,"text":"四类高频任务","textPreview":"四类高频任务","textChars":6,"textLines":1,"bbox":[716,152,320,30]}
+{"kind":"textbox","id":"sh/8r6xk3ep","slide":7,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[716,204,38,24]}
+{"kind":"textbox","id":"sh/s7epwbqd","slide":7,"text":"查找数据","textPreview":"查找数据","textChars":4,"textLines":1,"bbox":[762,196,150,30]}
+{"kind":"textbox","id":"sh/t87q5g7y","slide":7,"text":"按权限查询物料、报价、订单、合同、质量与市场数据","textPreview":"按权限查询物料、报价、订单、合同、质量与市场数据","textChars":24,"textLines":1,"bbox":[762,230,442,44]}
+{"kind":"shape","id":"sh/65w7u187","slide":7,"bbox":[716,282,488,0]}
+{"kind":"textbox","id":"sh/r65836ps","slide":7,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[716,300,38,24]}
+{"kind":"textbox","id":"sh/43epsrq1","slide":7,"text":"修正模型","textPreview":"修正模型","textChars":4,"textLines":1,"bbox":[762,292,150,30]}
+{"kind":"textbox","id":"sh/54nq1w7m","slide":7,"text":"提交错误样例、调整规则或权重，发起重算/重训申请","textPreview":"提交错误样例、调整规则或权重，发起重算/重训申请","textChars":24,"textLines":1,"bbox":[762,326,442,44]}
+{"kind":"shape","id":"sh/i1w7qh8b","slide":7,"bbox":[716,378,488,0]}
+{"kind":"textbox","id":"sh/j25ozmpg","slide":7,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[716,396,38,24]}
+{"kind":"textbox","id":"sh/wfuporq5","slide":7,"text":"任务优化","textPreview":"任务优化","textChars":4,"textLines":1,"bbox":[762,388,150,30]}
+{"kind":"textbox","id":"sh/hg36xwrq","slide":7,"text":"分析目标、依赖与瓶颈，提出拆分、排序与替代方案","textPreview":"分析目标、依赖与瓶颈，提出拆分、排序与替代方案","textChars":23,"textLines":1,"bbox":[762,422,442,44]}
+{"kind":"shape","id":"sh/zal87mtc","slide":7,"bbox":[716,474,488,0]}
+{"kind":"textbox","id":"sh/y9srehsr","slide":7,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[716,492,38,24]}
+{"kind":"textbox","id":"sh/lc3q9cbi","slide":7,"text":"报告生成","textPreview":"报告生成","textChars":4,"textLines":1,"bbox":[762,484,150,30]}
+{"kind":"textbox","id":"sh/kbu9grax","slide":7,"text":"生成比价说明、市场报告、谈判提纲与管理汇报","textPreview":"生成比价说明、市场报告、谈判提纲与管理汇报","textChars":21,"textLines":1,"bbox":[762,518,442,44]}
+{"kind":"shape","id":"sh/7el8bmto","slide":7,"bbox":[716,584,488,38]}
+{"kind":"textbox","id":"sh/mdcrihs3","slide":7,"text":"有影响的操作：先预览 → 用户确认 → 执行 → 审计留痕","textPreview":"有影响的操作：先预览 → 用户确认 → 执行 → 审计留痕","textChars":29,"textLines":1,"bbox":[732,594,456,22]}
+{"kind":"notes","id":"nt/0lpd03","slide":7,"text":""}
+{"kind":"slide","id":"sl/mi0qir","slide":8,"title":"实施建议","textShapes":38}
+{"kind":"textbox","id":"sh/0zuh47ix","slide":8,"text":"实施建议","textPreview":"实施建议","textChars":4,"textLines":1,"bbox":[42,30,540,26]}
+{"kind":"textbox","id":"sh/zyl0b21c","slide":8,"text":"先打通数据与比价，再升级模型与跨工厂优化","textPreview":"先打通数据与比价，再升级模型与跨工厂优化","textChars":20,"textLines":1,"bbox":[42,66,1160,70]}
+{"kind":"shape","id":"sh/yxcz2x0r","slide":8,"bbox":[42,650,1196,0]}
+{"kind":"textbox","id":"sh/dw3i9sj6","slide":8,"text":"来源：制造业采购AI智能体系统需求规格说明书 V1.1","textPreview":"来源：制造业采购AI智能体系统需求规格说明书 V1.1","textChars":27,"textLines":1,"bbox":[42,662,1000,22]}
+{"kind":"textbox","id":"sh/cvah0nil","slide":8,"text":"08","textPreview":"08","textChars":2,"textLines":1,"bbox":[1170,660,68,22]}
+{"kind":"shape","id":"sh/bu107210","slide":8,"bbox":[104,506,1060,0]}
+{"kind":"shape","id":"sh/q9szyx0v","slide":8,"bbox":[104,499,14,14]}
+{"kind":"shape","id":"sh/p8ji5sja","slide":8,"bbox":[466,499,14,14]}
+{"kind":"shape","id":"sh/o7ahwnip","slide":8,"bbox":[828,499,14,14]}
+{"kind":"shape","id":"sh/2x0fqdon","slide":8,"bbox":[42,154,374,316]}
+{"kind":"textbox","id":"sh/ny9wzip8","slide":8,"text":"一期｜基础可用","textPreview":"一期｜基础可用","textChars":7,"textLines":1,"bbox":[66,180,320,30]}
+{"kind":"textbox","id":"sh/oz2xsn6t","slide":8,"text":"建立可信数据底座","textPreview":"建立可信数据底座","textChars":8,"textLines":1,"bbox":[66,222,320,28]}
+{"kind":"textbox","id":"sh/p0by1s7e","slide":8,"text":"✓","textPreview":"✓","textChars":1,"textLines":1,"bbox":[66,278,26,24]}
+{"kind":"textbox","id":"sh/e90fmdor","slide":8,"text":"AI助手与知识库","textPreview":"AI助手与知识库","textChars":8,"textLines":1,"bbox":[100,276,280,26]}
+{"kind":"textbox","id":"sh/fa9wvipc","slide":8,"text":"✓","textPreview":"✓","textChars":1,"textLines":1,"bbox":[66,322,26,24]}
+{"kind":"textbox","id":"sh/0bixon6x","slide":8,"text":"报价识别与自动比价","textPreview":"报价识别与自动比价","textChars":9,"textLines":1,"bbox":[100,320,280,26]}
+{"kind":"textbox","id":"sh/1crex872","slide":8,"text":"✓","textPreview":"✓","textChars":1,"textLines":1,"bbox":[66,366,26,24]}
+{"kind":"textbox","id":"sh/q5gfitof","slide":8,"text":"历史价格 / 供应商绩效","textPreview":"历史价格 / 供应商绩效","textChars":12,"textLines":1,"bbox":[100,364,280,26]}
+{"kind":"textbox","id":"sh/r6pwryp0","slide":8,"text":"✓","textPreview":"✓","textChars":1,"textLines":1,"bbox":[66,410,26,24]}
+{"kind":"textbox","id":"sh/vylk3a1g","slide":8,"text":"合同审查与报告导出","textPreview":"合同审查与报告导出","textChars":9,"textLines":1,"bbox":[100,408,280,26]}
+{"kind":"shape","id":"sh/uxc3a50b","slide":8,"bbox":[452,154,374,316]}
+{"kind":"textbox","id":"sh/h03m50jm","slide":8,"text":"二期｜决策增强","textPreview":"二期｜决策增强","textChars":7,"textLines":1,"bbox":[476,180,320,30]}
+{"kind":"textbox","id":"sh/wzulcfi1","slide":8,"text":"让采购结果可计算","textPreview":"让采购结果可计算","textChars":8,"textLines":1,"bbox":[476,222,320,28]}
+{"kind":"textbox","id":"sh/j2547a1s","slide":8,"text":"✓","textPreview":"✓","textChars":1,"textLines":1,"bbox":[476,278,26,24]}
+{"kind":"textbox","id":"sh/i1c3e507","slide":8,"text":"需求预测与情景模拟","textPreview":"需求预测与情景模拟","textChars":9,"textLines":1,"bbox":[510,276,280,26]}
+{"kind":"textbox","id":"sh/54nm9kjy","slide":8,"text":"✓","textPreview":"✓","textChars":1,"textLines":1,"bbox":[476,322,26,24]}
+{"kind":"textbox","id":"sh/43elgfid","slide":8,"text":"TCO综合成本模型","textPreview":"TCO综合成本模型","textChars":9,"textLines":1,"bbox":[510,320,280,26]}
+{"kind":"textbox","id":"sh/z61kvq1o","slide":8,"text":"✓","textPreview":"✓","textChars":1,"textLines":1,"bbox":[476,366,26,24]}
+{"kind":"textbox","id":"sh/y5s32l03","slide":8,"text":"多元回归招标评价","textPreview":"多元回归招标评价","textChars":8,"textLines":1,"bbox":[510,364,280,26]}
+{"kind":"textbox","id":"sh/ob6hcryl","slide":8,"text":"✓","textPreview":"✓","textChars":1,"textLines":1,"bbox":[476,410,26,24]}
+{"kind":"textbox","id":"sh/pczi5wz6","slide":8,"text":"风险预警与智能寻源","textPreview":"风险预警与智能寻源","textChars":9,"textLines":1,"bbox":[510,408,280,26]}
+{"kind":"shape","id":"sh/29ozahgv","slide":8,"bbox":[862,154,374,316]}
+{"kind":"textbox","id":"sh/3ax03mhg","slide":8,"text":"三期｜优化协同","textPreview":"三期｜优化协同","textChars":7,"textLines":1,"bbox":[886,180,320,30]}
+{"kind":"textbox","id":"sh/g76h87yp","slide":8,"text":"实现跨工厂全局最优","textPreview":"实现跨工厂全局最优","textChars":9,"textLines":1,"bbox":[886,222,320,28]}
+{"kind":"textbox","id":"sh/18fi1cza","slide":8,"text":"✓","textPreview":"✓","textChars":1,"textLines":1,"bbox":[886,278,26,24]}
+{"kind":"textbox","id":"sh/eloz6xgj","slide":8,"text":"产业链知识图谱","textPreview":"产业链知识图谱","textChars":7,"textLines":1,"bbox":[920,276,280,26]}
+{"kind":"textbox","id":"sh/f6x0z2h4","slide":8,"text":"✓","textPreview":"✓","textChars":1,"textLines":1,"bbox":[886,322,26,24]}
+{"kind":"textbox","id":"sh/k3a1kbyt","slide":8,"text":"多工厂供货分配","textPreview":"多工厂供货分配","textChars":7,"textLines":1,"bbox":[920,320,280,26]}
+{"kind":"textbox","id":"sh/l4jidgze","slide":8,"text":"✓","textPreview":"✓","textChars":1,"textLines":1,"bbox":[886,366,26,24]}
+{"kind":"textbox","id":"sh/hobe58fq","slide":8,"text":"交货路径与中断重算","textPreview":"交货路径与中断重算","textChars":9,"textLines":1,"bbox":[920,364,280,26]}
+{"kind":"textbox","id":"sh/wn2xw3el","slide":8,"text":"✓","textPreview":"✓","textChars":1,"textLines":1,"bbox":[886,410,26,24]}
+{"kind":"textbox","id":"sh/vmtw3yx0","slide":8,"text":"动态采购策略","textPreview":"动态采购策略","textChars":6,"textLines":1,"bbox":[920,408,280,26]}
+{"kind":"textbox","id":"sh/ulkfutwf","slide":8,"text":"阶段1","textPreview":"阶段1","textChars":3,"textLines":1,"bbox":[84,532,100,24]}
+{"kind":"textbox","id":"sh/5cvy98f2","slide":8,"text":"阶段2","textPreview":"阶段2","textChars":3,"textLines":1,"bbox":[446,532,100,24]}
+{"kind":"textbox","id":"sh/4r2x03eh","slide":8,"text":"阶段3","textPreview":"阶段3","textChars":3,"textLines":1,"bbox":[808,532,100,24]}
+{"kind":"shape","id":"sh/jqtg7yxw","slide":8,"bbox":[42,576,1196,52]}
+{"kind":"textbox","id":"sh/ipkfydwb","slide":8,"text":"建议下一步：确认一期范围、客户样例数据、TCO口径及模型策略，进入开发设计。","textPreview":"建议下一步：确认一期范围、客户样例数据、TCO口径及模型策略，进入开发设计。","textChars":38,"textLines":1,"bbox":[64,590,1152,28]}
+{"kind":"notes","id":"nt/mi0qir","slide":8,"text":""}

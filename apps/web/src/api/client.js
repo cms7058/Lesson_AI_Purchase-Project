@@ -1,0 +1,103 @@
+import axios from "axios";
+
+export const listQueryFilters = {};
+
+export const api = axios.create({
+  baseURL: process.env.VUE_APP_API_BASE_URL || "/api/v1",
+  timeout: 20000,
+  headers: { "X-User-Id": "demo-manager", "X-User-Role": "procurement_manager" }
+});
+
+api.interceptors.request.use(config => {
+  const resource = (config.url || '').replace(/^\//, '');
+  if (config.method === 'get' && config.params?.page && !config.unfiltered && !config.params.unfiltered && listQueryFilters[resource]?.length) {
+    config.params = {...config.params, filters: JSON.stringify(listQueryFilters[resource])};
+  }
+  return config;
+});
+
+export const fetchModules = () => api.get("/modules").then((response) => response.data);
+export const fetchOrders = (params) => api.get("/orders", { params }).then((response) => response.data);
+export const createOrder = (payload) => api.post("/orders", payload).then((response) => response.data);
+export const updateOrder = (id, payload) => api.patch(`/orders/${id}`, payload).then((response) => response.data);
+export const deleteOrder = (id) => api.delete(`/orders/${id}`);
+export const fetchConnectors = (params) => api.get("/data-connectors", { params }).then((response) => response.data);
+export const createConnector = (payload) => api.post("/data-connectors", payload).then((response) => response.data);
+export const updateConnector = (id, payload) => api.patch(`/data-connectors/${id}`, payload).then((response) => response.data);
+export const deleteConnector = (id) => api.delete(`/data-connectors/${id}`);
+export const createQuotation = (payload) => api.post("/quotations", payload).then((response) => response.data);
+export const fetchQuotations = (params) => api.get("/quotations", { params }).then((response) => response.data);
+export const updateQuotation = (id, payload) => api.patch(`/quotations/${id}`, payload).then((response) => response.data);
+export const deleteQuotation = (id) => api.delete(`/quotations/${id}`);
+export const compareQuotations = (params) => api.get("/quotations/compare", { params }).then((response) => response.data);
+export const fetchTemplates = (params) => api.get("/templates", { params }).then((response) => response.data);
+export const createTemplate = (payload) => api.post("/templates", payload).then((response) => response.data);
+export const uploadWordContractTemplate = (payload) => { const form = new FormData(); form.append("name", payload.name); form.append("version", payload.version || "1.0"); form.append("file", payload.file); return api.post("/templates/word-contract", form, { headers: { "Content-Type": "multipart/form-data" } }).then((response) => response.data); };
+export const fetchTemplateValidation = (id) => api.get(`/templates/${id}/validation`).then((response) => response.data);
+export const fetchContractFields = (params) => api.get("/contract-fields", { params }).then((response) => response.data);
+export const createContractField = (payload) => api.post("/contract-fields", payload).then((response) => response.data);
+export const updateContractField = (id, payload) => api.patch(`/contract-fields/${id}`, payload).then((response) => response.data);
+export const deactivateContractField = (id) => api.delete(`/contract-fields/${id}`);
+export const generateManagedContractTemplate = (payload) => api.post("/contract-fields/generate-template", payload).then((response) => response.data);
+export const updateTemplate = (id, payload) => api.patch(`/templates/${id}`, payload).then((response) => response.data);
+export const deleteTemplate = (id) => api.delete(`/templates/${id}`);
+export const renderOrderTemplate = (templateId, orderId) => api.post(`/templates/${templateId}/render/orders/${orderId}`).then((response) => response.data);
+export const linkTemplate = (payload) => api.post("/template-links", payload).then((response) => response.data);
+export const exportDocument = (sourceType, sourceId, payload) => api.post(`/documents/${sourceType}/${sourceId}/export`, payload).then((response) => response.data);
+export const fetchCompanyProfile = () => api.get("/company-profile").then((response) => response.data);
+export const updateCompanyProfile = (payload) => api.put("/company-profile", payload).then((response) => response.data);
+export const uploadCompanyLogo = (file) => { const form = new FormData(); form.append("logo", file); return api.post("/company-profile/logo", form, { headers: { "Content-Type": "multipart/form-data" } }).then((response) => response.data); };
+export const chat = (payload) => api.post("/assistant/chat", payload).then((response) => response.data);
+export const fetchMasterData = (type, params) => api.get(`/${type}`, { params }).then((response) => response.data);
+export const createMasterData = (type, payload) => api.post(`/${type}`, payload).then((response) => response.data);
+export const updateMasterData = (type, id, payload) => api.patch(`/${type}/${id}`, payload).then((response) => response.data);
+export const deleteMasterData = (type, id) => api.delete(`/${type}/${id}`);
+export const fetchRequisitions = (params) => api.get("/requisitions", { params }).then((response) => response.data);
+export const createRequisition = (payload) => api.post("/requisitions", payload).then((response) => response.data);
+export const updateRequisition = (id, payload) => api.patch(`/requisitions/${id}`, payload).then((response) => response.data);
+export const deleteRequisition = (id) => api.delete(`/requisitions/${id}`);
+export const submitRequisition = (id) => api.post(`/requisitions/${id}/submit`).then((response) => response.data);
+export const decideRequisition = (id, payload) => api.post(`/requisitions/${id}/decision`, payload).then((response) => response.data);
+export const convertRequisition = (id, payload) => api.post(`/requisitions/${id}/convert-to-order`, payload).then((response) => response.data);
+export const fetchRfqs = (params) => api.get("/rfqs", { params }).then((response) => response.data);
+export const createRfq = (payload) => api.post("/rfqs", payload).then((response) => response.data);
+export const updateRfq = (id, payload) => api.patch(`/rfqs/${id}`, payload).then((response) => response.data);
+export const deleteRfq = (id) => api.delete(`/rfqs/${id}`);
+export const publishRfq = (id) => api.post(`/rfqs/${id}/publish`).then((response) => response.data);
+export const linkRfqResponse = (id, quotationId) => api.post(`/rfqs/${id}/responses`, { quotation_id: quotationId }).then((response) => response.data);
+export const awardRfq = (id, quotationId) => api.post(`/rfqs/${id}/award`, { quotation_id: quotationId }).then((response) => response.data);
+export const fetchFlowItems = (type, params) => api.get(`/${type}`, { params }).then((response) => response.data);
+export const createFlowItem = (type, payload) => api.post(`/${type}`, payload).then((response) => response.data);
+export const updateFlowItem = (type, id, payload) => api.patch(`/${type}/${id}`, payload).then((response) => response.data);
+export const deleteFlowItem = (type, id) => api.delete(`/${type}/${id}`);
+export const runFlowAction = (type, id, action, payload = {}) => api.post(`/${type}/${id}/${action}`, payload).then((response) => response.data);
+export const updateFlowStatus = (type, id, status) => api.patch(`/${type}/${id}/status`, { status }).then((response) => response.data);
+export const fetchWorkflows = (params) => api.get("/workflows", { params }).then((response) => response.data);
+export const createWorkflow = (payload) => api.post("/workflows", payload).then((response) => response.data);
+export const updateWorkflow = (id, payload) => api.patch(`/workflows/${id}`, payload).then((response) => response.data);
+export const deleteWorkflow = (id) => api.delete(`/workflows/${id}`);
+export const executeWorkflow = (id, payload) => api.post(`/workflows/${id}/execute`, payload).then((response) => response.data);
+export const fetchWorkflowRuns = (params) => api.get("/workflow-runs", { params }).then((response) => response.data);
+export const approveWorkflowRun = (id) => api.post(`/workflow-runs/${id}/approve`).then((response) => response.data);
+export const fetchNotificationOutbox = (params) => api.get("/notification-outbox", { params }).then((response) => response.data);
+export const dispatchNotification = (id) => api.post(`/notification-outbox/${id}/dispatch`).then((response) => response.data);
+export const fetchProcurementAnalytics = () => api.get("/analytics/procurement").then((response) => response.data);
+export const fetchMaterialCategories = (params) => api.get("/material-categories", { params }).then((response) => response.data);
+export const fetchMaterialCategoryTree = () => api.get("/material-categories/tree").then((response) => response.data);
+export const createMaterialCategory = (payload) => api.post("/material-categories", payload).then((response) => response.data);
+export const updateMaterialCategory = (id, payload) => api.patch(`/material-categories/${id}`, payload).then((response) => response.data);
+export const deleteMaterialCategory = (id) => api.delete(`/material-categories/${id}`);
+export const fetchMaterialAssignments = () => api.get("/material-category-assignments").then((response) => response.data);
+export const assignMaterialCategory = (materialId, categoryId) => api.put(`/materials/${materialId}/category`, { material_id: materialId, category_id: categoryId }).then((response) => response.data);
+export const fetchStaffUsers = (params) => api.get("/staff-users", { params }).then((response) => response.data);
+export const createStaffUser = (payload) => api.post("/staff-users", payload).then((response) => response.data);
+export const updateStaffUser = (id, payload) => api.patch(`/staff-users/${id}`, payload).then((response) => response.data);
+export const deleteStaffUser = (id) => api.delete(`/staff-users/${id}`);
+export const fetchBuyerAuthorizations = (params) => api.get("/buyer-authorizations", { params }).then((response) => response.data);
+export const createBuyerAuthorization = (payload) => api.post("/buyer-authorizations", payload).then((response) => response.data);
+export const updateBuyerAuthorization = (id, payload) => api.patch(`/buyer-authorizations/${id}`, payload).then((response) => response.data);
+export const deleteBuyerAuthorization = (id) => api.delete(`/buyer-authorizations/${id}`);
+export const fetchSupplierCategoryLinks = (params) => api.get("/supplier-category-links", { params }).then((response) => response.data);
+export const createSupplierCategoryLink = (payload) => api.post("/supplier-category-links", payload).then((response) => response.data);
+export const updateSupplierCategoryLink = (id, payload) => api.patch(`/supplier-category-links/${id}`, payload).then((response) => response.data);
+export const deleteSupplierCategoryLink = (id) => api.delete(`/supplier-category-links/${id}`);

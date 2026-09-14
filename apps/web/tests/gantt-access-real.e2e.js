@@ -1,0 +1,22 @@
+/* eslint-env node */
+const {chromium}=require('playwright');const assert=require('node:assert/strict');
+const base='http://127.0.0.1:18003/api/v1';const headers={'Content-Type':'application/json','X-User-Role':'procurement_manager'};
+async function req(path,method='GET',data){const r=await fetch(base+path,{method,headers,body:data?JSON.stringify(data):undefined});assert(r.ok,await r.clone().text());return r.status===204?null:r.json();}
+(async()=>{
+ const tag='DRAG-'+Date.now();const staff=await req('/staff-users','POST',{user_code:tag,name:tag+'人员'});const project=await req('/projects','POST',{code:tag,name:tag,tasks:[{id:'a',name:'设计',owner_id:staff.id,start:'2026-09-01',finish:'2026-09-03'},{id:'b',name:'采购',owner_id:staff.id,start:'2026-09-05',finish:'2026-09-07',predecessors:['a']}]});
+ const browser=await chromium.launch({headless:true});const p=await browser.newPage({viewport:{width:1440,height:1100}});p.on('pageerror',e=>console.log('PAGE ERROR',e.message));
+ await p.route('**/api/v1/**',async r=>{const u=new URL(r.request().url());await r.fulfill({response:await r.fetch({url:'http://127.0.0.1:18003'+u.pathname+u.search})});});
+ try{
+  await p.goto('http://localhost:8080/projects?project='+project.id,{waitUntil:'networkidle'});const d=p.getByRole('dialog',{name:'项目与计划',exact:true});await d.getByRole('tab',{name:'项目甘特图',exact:true}).click();
+  await d.locator('.vtable-project-gantt canvas').first().waitFor();await p.waitForTimeout(700);await p.screenshot({path:'/tmp/vtable-test.png'});const box=await d.locator('.vtable-project-gantt').boundingBox();const moved=p.waitForResponse(r=>r.url().includes('/schedule-preview'));
+  await p.mouse.move(box.x+450+8*36,box.y+64+21);await p.mouse.down();await p.waitForTimeout(150);await p.mouse.move(box.x+450+10*36,box.y+64+21,{steps:20});await p.waitForTimeout(150);await p.mouse.up();await p.screenshot({path:'/tmp/vtable-after.png'});assert((await moved).ok());await d.getByRole('button',{name:'保存项目',exact:true}).click();await d.waitFor({state:'hidden'});
+  const saved=await req('/projects/'+project.id);assert.equal(saved.tasks[0].start,'2026-09-03');assert.equal(saved.tasks[1].start,'2026-09-07');
+  await p.goto('http://localhost:8080/personnel',{waitUntil:'networkidle'});await p.getByRole('heading',{name:'人员配置',exact:true}).waitFor();await p.getByRole('tab',{name:'项目人员授权'}).click();await p.getByRole('button',{name:'新增项目授权'}).click();const g=p.getByRole('dialog',{name:'项目人员授权',exact:true});
+  await g.locator('.el-select').nth(0).click();await p.locator('.el-select-dropdown:visible').getByText(tag+' '+tag,{exact:true}).click();await g.locator('.el-select').nth(1).click();await p.locator('.el-select-dropdown:visible').getByText(tag+'人员',{exact:true}).click();
+  const dates=g.locator('.el-date-editor input');await dates.nth(0).fill('2026-01-01');await dates.nth(1).fill('2099-01-01');await dates.nth(1).press('Enter');await g.locator('.el-dialog__header').click();await g.getByRole('button',{name:'保存授权',exact:true}).click();await g.waitFor({state:'hidden'});
+  let grants=await req('/project-grants?project_id='+project.id);assert.equal(grants.total,1);const member=await fetch(base+'/projects/'+project.id,{headers:{'X-User-Role':'buyer','X-User-Id':tag}});assert.equal(member.status,200);
+  const row=p.locator('.el-table__row').filter({hasText:tag+'人员'});await row.getByRole('button',{name:'撤销',exact:true}).click();await Promise.all([p.waitForResponse(r=>r.request().method()==='DELETE'),p.locator('.el-message-box').getByRole('button',{name:'确定',exact:true}).click()]);grants=await req('/project-grants?project_id='+project.id);assert.equal(grants.total,0);
+  assert.equal((await fetch(base+'/projects/'+project.id,{headers:{'X-User-Role':'buyer','X-User-Id':tag}})).status,403);
+  await p.locator('.ai-fab').click();const ai=p.locator('.assistant-dialog');assert.equal(await ai.locator('.ai-shortcuts').count(),0);await ai.locator('textarea').fill('查询项目 '+tag+' 的逾期任务');await ai.locator('textarea').press('Enter');await ai.locator('.ai-result .el-table__row').first().waitFor();assert(await ai.locator('canvas').count()>0);assert((await ai.innerText()).includes('设计'));await p.screenshot({path:'/tmp/project-ai-result.png'});console.log('PASS VTable mouse drag, downstream save/readback, grants, AI Enter query with chart and no shortcuts');
+ }finally{await browser.close();}
+})().catch(e=>{console.error(e);process.exit(1);});

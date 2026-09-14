@@ -1,0 +1,93 @@
+from fastapi import APIRouter, Depends
+
+from app.api.routes import (
+    ai_settings,
+    analytics,
+    assistant,
+    audit,
+    catalog,
+    company,
+    connectors,
+    contract_fields,
+    contract_reviews,
+    contracts,
+    documents,
+    doe,
+    equipment_mro,
+    fulfillment,
+    health,
+    inventory_intelligence,
+    knowledge,
+    master_data,
+    material_costs,
+    material_documents,
+    material_governance,
+    orders,
+    organization,
+    planning,
+    project_access,
+    project_costs,
+    project_notifications,
+    projects,
+    quotations,
+    requisitions,
+    rfqs,
+    settlements,
+    spare_operations,
+    spares,
+    strategy_decision,
+    supplier_execution,
+    supplier_portal,
+    supplier_qualifications,
+    supply_feedback,
+    template_links,
+    templates,
+    workflows,
+)
+from app.services.list_filters import list_filter_scope
+from app.services.list_filters import router as filters_router
+
+api_router = APIRouter(dependencies=[Depends(list_filter_scope)])
+api_router.include_router(ai_settings.router)
+api_router.include_router(spares.router)
+api_router.include_router(spare_operations.router)
+api_router.include_router(strategy_decision.router)
+api_router.include_router(doe.router)
+api_router.include_router(equipment_mro.router)
+api_router.include_router(inventory_intelligence.router)
+api_router.include_router(knowledge.router)
+api_router.include_router(projects.router)
+api_router.include_router(project_access.router)
+api_router.include_router(project_costs.router)
+api_router.include_router(project_notifications.router)
+api_router.include_router(filters_router)
+api_router.include_router(supplier_execution.router)
+api_router.include_router(supplier_qualifications.router)
+api_router.include_router(supply_feedback.router)
+api_router.include_router(supplier_portal.router)
+api_router.include_router(material_costs.router)
+api_router.include_router(material_documents.router)
+api_router.include_router(analytics.router)
+api_router.include_router(health.router)
+api_router.include_router(fulfillment.router)
+api_router.include_router(master_data.router)
+api_router.include_router(material_governance.router)
+api_router.include_router(catalog.router)
+api_router.include_router(orders.router)
+api_router.include_router(connectors.router)
+api_router.include_router(audit.router)
+api_router.include_router(quotations.router)
+api_router.include_router(requisitions.router)
+api_router.include_router(rfqs.router)
+api_router.include_router(settlements.router)
+api_router.include_router(contracts.router)
+api_router.include_router(contract_fields.router)
+api_router.include_router(contract_reviews.router)
+api_router.include_router(company.router)
+api_router.include_router(documents.router)
+api_router.include_router(templates.router)
+api_router.include_router(template_links.router)
+api_router.include_router(assistant.router)
+api_router.include_router(workflows.router)
+api_router.include_router(planning.router)
+api_router.include_router(organization.router)
