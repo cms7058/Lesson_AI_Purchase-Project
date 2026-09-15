@@ -5,6 +5,7 @@ from app.api.routes import (
     analytics,
     assistant,
     audit,
+    aviation_mro,
     catalog,
     company,
     connectors,
@@ -49,6 +50,7 @@ from app.services.list_filters import router as filters_router
 
 api_router = APIRouter(dependencies=[Depends(list_filter_scope)])
 api_router.include_router(ai_settings.router)
+api_router.include_router(aviation_mro.router)
 api_router.include_router(spares.router)
 api_router.include_router(spare_operations.router)
 api_router.include_router(strategy_decision.router)

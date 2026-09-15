@@ -5,6 +5,8 @@ from uuid import UUID, uuid4
 
 from pydantic import BaseModel, ConfigDict, Field, computed_field
 
+from app.domain.aviation_mro import AviationRequisitionProfile
+
 
 class RequisitionStatus(StrEnum):
     DRAFT = "draft"
@@ -37,7 +39,8 @@ class RequisitionLine(BaseModel):
 
 
 class RequisitionCreate(BaseModel):
-    spare_plan_codes: list[str] = Field(default_factory=list,max_length=100)
+    aviation_profile: AviationRequisitionProfile | None = None
+    spare_plan_codes: list[str] = Field(default_factory=list, max_length=100)
     title: str = Field(min_length=2, max_length=200)
     factory_code: str = Field(min_length=1, max_length=64)
     department: str = Field(default="", max_length=100)
@@ -49,7 +52,8 @@ class RequisitionCreate(BaseModel):
 
 
 class RequisitionUpdate(BaseModel):
-    spare_plan_codes: list[str] | None = Field(default=None,max_length=100)
+    aviation_profile: AviationRequisitionProfile | None = None
+    spare_plan_codes: list[str] | None = Field(default=None, max_length=100)
     title: str | None = Field(default=None, min_length=2, max_length=200)
     factory_code: str | None = Field(default=None, min_length=1, max_length=64)
     department: str | None = Field(default=None, max_length=100)

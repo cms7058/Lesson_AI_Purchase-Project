@@ -1,29 +1,533 @@
 <template>
   <div>
-    <div class="page-heading"><div><p class="eyebrow">三级分类与主数据治理</p><h1>物料管理</h1><p>统一管理分类编码、物料档案、供方能力，并由相似度扫描辅助识别一物多码。</p></div><div><el-button v-if="active==='categories'" @click="previewIndustry('nonstandard')">导入非标制造分类</el-button><el-button v-if="active==='categories'" @click="previewIndustry('automotive')">导入汽车零部件分类</el-button><el-button v-if="active!=='governance'" type="primary" @click="openCreate">新增{{ activeLabel }}</el-button></div></div>
-    <div class="process-strip"><span>一级分类 <b>01</b></span><i>→</i><span>二级分类 <b>01-01</b></span><i>→</i><span>三级分类 <b>01-01-01</b></span><i>→</i><span>物料与供应商关联</span></div>
-    <el-tabs v-model="active" type="card" @tab-click="changeTab"><el-tab-pane label="分类编码" name="categories"/><el-tab-pane label="物料档案" name="materials"/><el-tab-pane label="供应商-分类" name="links"/><el-tab-pane label="重复料治理" name="governance"/></el-tabs>
-    <div v-if="active!=='governance'" class="table-toolbar"><el-select v-if="active==='materials'" v-model="materialType" clearable placeholder="全部物料类别" @change="search"><el-option label="生产件" value="production"/><el-option label="备件" value="spare"/></el-select><el-input v-if="active!=='links'" v-model.trim="keyword" clearable placeholder="输入编码或名称" @keyup.enter.native="search" @clear="search"/><el-select v-if="active==='categories'" v-model="level" clearable placeholder="全部级别" @change="search"><el-option v-for="n in 3" :key="n" :label="`${n}级分类`" :value="n"/></el-select><el-button icon="el-icon-search" @click="search">查询</el-button><el-button @click="reset">重置</el-button></div>
-    <div v-else class="table-toolbar"><el-input v-model.trim="keyword" clearable placeholder="输入物料编码、名称或规格" @keyup.enter.native="search" @clear="search"/><el-input-number v-model="governanceThreshold" :min="40" :max="100" :step="5"/><span>最低相似度 %</span><el-select v-model="governanceStatus" @change="search"><el-option label="全部状态" value="all"/><el-option label="待评审" value="unreviewed"/><el-option label="保留观察" value="watchlist"/><el-option label="确认重复" value="duplicate"/><el-option label="确认非重复" value="not_duplicate"/></el-select><el-button type="primary" icon="el-icon-search" @click="search">扫描疑似重复料</el-button></div>
+    <div class="page-heading">
+      <div>
+        <p class="eyebrow">三级分类与主数据治理</p>
+        <h1>物料管理</h1>
+        <p>
+          统一管理分类编码、物料档案、供方能力，并由相似度扫描辅助识别一物多码。
+        </p>
+      </div>
+      <div>
+        <el-button v-if="active === 'materials'" @click="seedAviationDemo"
+          >导入航空MRO演示数据</el-button
+        ><el-button
+          v-if="active === 'categories'"
+          @click="previewIndustry('nonstandard')"
+          >导入非标制造分类</el-button
+        ><el-button
+          v-if="active === 'categories'"
+          @click="previewIndustry('automotive')"
+          >导入汽车零部件分类</el-button
+        ><el-button
+          v-if="active !== 'governance'"
+          type="primary"
+          @click="openCreate"
+          >新增{{ activeLabel }}</el-button
+        >
+      </div>
+    </div>
+    <div class="process-strip">
+      <span>一级分类 <b>01</b></span
+      ><i>→</i><span>二级分类 <b>01-01</b></span
+      ><i>→</i><span>三级分类 <b>01-01-01</b></span
+      ><i>→</i><span>物料与供应商关联</span>
+    </div>
+    <el-tabs v-model="active" type="card" @tab-click="changeTab"
+      ><el-tab-pane label="分类编码" name="categories" /><el-tab-pane
+        label="物料档案"
+        name="materials" /><el-tab-pane
+        label="供应商-分类"
+        name="links" /><el-tab-pane label="重复料治理" name="governance"
+    /></el-tabs>
+    <div v-if="active !== 'governance'" class="table-toolbar">
+      <el-select
+        v-if="active === 'materials'"
+        v-model="materialType"
+        clearable
+        placeholder="全部物料类别"
+        @change="search"
+        ><el-option label="生产件" value="production" /><el-option
+          label="备件"
+          value="spare" /></el-select
+      ><el-input
+        v-if="active !== 'links'"
+        v-model.trim="keyword"
+        clearable
+        placeholder="输入编码或名称"
+        @keyup.enter.native="search"
+        @clear="search"
+      /><el-select
+        v-if="active === 'categories'"
+        v-model="level"
+        clearable
+        placeholder="全部级别"
+        @change="search"
+        ><el-option
+          v-for="n in 3"
+          :key="n"
+          :label="`${n}级分类`"
+          :value="n" /></el-select
+      ><el-button icon="el-icon-search" @click="search">查询</el-button
+      ><el-button @click="reset">重置</el-button>
+    </div>
+    <div v-else class="table-toolbar">
+      <el-input
+        v-model.trim="keyword"
+        clearable
+        placeholder="输入物料编码、名称或规格"
+        @keyup.enter.native="search"
+        @clear="search"
+      /><el-input-number
+        v-model="governanceThreshold"
+        :min="40"
+        :max="100"
+        :step="5"
+      /><span>最低相似度 %</span
+      ><el-select v-model="governanceStatus" @change="search"
+        ><el-option label="全部状态" value="all" /><el-option
+          label="待评审"
+          value="unreviewed" /><el-option
+          label="保留观察"
+          value="watchlist" /><el-option
+          label="确认重复"
+          value="duplicate" /><el-option
+          label="确认非重复"
+          value="not_duplicate" /></el-select
+      ><el-button type="primary" icon="el-icon-search" @click="search"
+        >扫描疑似重复料</el-button
+      >
+    </div>
 
-    <el-table key="categories" v-if="active==='categories'" v-loading="loading" :data="items" row-key="id" default-expand-all :tree-props="{children:'children'}" class="data-table" empty-text="暂无分类"><el-table-column prop="code" label="分类编码" width="150"/><el-table-column prop="name" label="分类名称" min-width="150"/><el-table-column prop="path_name" label="完整路径" min-width="260"/><el-table-column label="级别" width="90"><template slot-scope="s"><el-tag size="mini">{{ s.row.level }}级</el-tag></template></el-table-column><el-table-column label="状态" width="90"><template slot-scope="s"><el-tag :type="s.row.active?'success':'info'">{{ s.row.active?'启用':'停用' }}</el-tag></template></el-table-column><el-table-column label="操作" width="130"><template slot-scope="s"><el-button type="text" @click="edit(s.row)">编辑</el-button><el-button type="text" class="danger-link" @click="remove(s.row)">删除</el-button></template></el-table-column></el-table>
-    <el-table key="materials" v-else-if="active==='materials'" v-loading="loading" :data="items" class="data-table" empty-text="暂无物料"><el-table-column label="物料编码" width="160"><template slot-scope="s"><el-button v-if="s.row.spare_classification&&s.row.spare_classification.material_type==='spare'" type="text" @click="analysisMaterial=s.row.code">{{s.row.code}}</el-button><span v-else>{{s.row.code}}</span></template></el-table-column><el-table-column label="物料类型" width="95"><template slot-scope="s">{{s.row.spare_classification&&s.row.spare_classification.material_type==='spare'?'备件':'生产件'}}</template></el-table-column><el-table-column prop="name" label="名称" min-width="150"/><el-table-column prop="specification" label="规格" min-width="150"/><el-table-column prop="category" label="三级分类路径" min-width="220"/><el-table-column prop="unit" label="单位" width="70"/><el-table-column prop="standard_price" label="标准价" width="100"/><el-table-column label="操作" width="200"><template slot-scope="s"><el-button type="text" @click="openDocuments(s.row)">技术资料</el-button><el-button type="text" @click="edit(s.row)">编辑</el-button><el-button type="text" class="danger-link" @click="remove(s.row)">删除</el-button></template></el-table-column></el-table>
-    <el-table key="links" v-else-if="active==='links'" v-loading="loading" :data="items" class="data-table" empty-text="暂无供应商分类关联"><el-table-column prop="supplier_code" label="供应商编码" width="145"/><el-table-column prop="supplier_name" label="供应商" min-width="170"/><el-table-column prop="category_code" label="分类编码" width="145"/><el-table-column prop="category_name" label="分类路径" min-width="220"/><el-table-column label="覆盖级别" width="100"><template slot-scope="s">{{ s.row.category_level }}级</template></el-table-column><el-table-column label="资质状态" width="110"><template slot-scope="s"><el-tag :type="linkType(s.row.qualification_status)">{{ linkName(s.row.qualification_status) }}</el-tag></template></el-table-column><el-table-column label="操作" width="130"><template slot-scope="s"><el-button type="text" @click="edit(s.row)">编辑</el-button><el-button type="text" class="danger-link" @click="remove(s.row)">删除</el-button></template></el-table-column></el-table>
-    <el-table key="governance" v-else-if="active==='governance'" v-loading="loading" :data="items" class="data-table" empty-text="当前阈值下没有疑似重复料"><el-table-column label="物料A" min-width="220"><template slot-scope="s"><strong>{{s.row.left.code}} · {{s.row.left.name}}</strong><br><span>{{s.row.left.specification||'无规格'}} / {{s.row.left.unit}}</span></template></el-table-column><el-table-column label="物料B" min-width="220"><template slot-scope="s"><strong>{{s.row.right.code}} · {{s.row.right.name}}</strong><br><span>{{s.row.right.specification||'无规格'}} / {{s.row.right.unit}}</span></template></el-table-column><el-table-column label="相似度" width="150"><template slot-scope="s"><el-progress :percentage="Math.round(s.row.similarity*100)" :status="s.row.similarity>=.85?'success':undefined"/></template></el-table-column><el-table-column label="识别依据" min-width="240"><template slot-scope="s"><el-tag v-for="item in s.row.basis" :key="item" size="mini">{{item}}</el-tag></template></el-table-column><el-table-column label="评审状态" width="115"><template slot-scope="s"><el-tag :type="governanceType(s.row.status)">{{governanceName(s.row.status)}}</el-tag></template></el-table-column><el-table-column label="操作" width="100"><template slot-scope="s"><el-button type="text" @click="reviewDuplicate(s.row)">人工评审</el-button></template></el-table-column></el-table>
-    <div class="pagination-row"><span>共 {{ pagination.total }} 条</span><el-pagination background layout="sizes, prev, pager, next" :page-sizes="[10,20,50]" :current-page="pagination.page" :page-size="pagination.page_size" :total="pagination.total" @current-change="changePage" @size-change="changeSize"/></div>
+    <el-table
+      key="categories"
+      v-if="active === 'categories'"
+      v-loading="loading"
+      :data="items"
+      row-key="id"
+      default-expand-all
+      :tree-props="{ children: 'children' }"
+      class="data-table"
+      empty-text="暂无分类"
+      ><el-table-column
+        prop="code"
+        label="分类编码"
+        width="150"
+      /><el-table-column
+        prop="name"
+        label="分类名称"
+        min-width="150"
+      /><el-table-column
+        prop="path_name"
+        label="完整路径"
+        min-width="260"
+      /><el-table-column label="级别" width="90"
+        ><template slot-scope="s"
+          ><el-tag size="mini">{{ s.row.level }}级</el-tag></template
+        ></el-table-column
+      ><el-table-column label="状态" width="90"
+        ><template slot-scope="s"
+          ><el-tag :type="s.row.active ? 'success' : 'info'">{{
+            s.row.active ? "启用" : "停用"
+          }}</el-tag></template
+        ></el-table-column
+      ><el-table-column label="操作" width="130"
+        ><template slot-scope="s"
+          ><el-button type="text" @click="edit(s.row)">编辑</el-button
+          ><el-button type="text" class="danger-link" @click="remove(s.row)"
+            >删除</el-button
+          ></template
+        ></el-table-column
+      ></el-table
+    >
+    <el-table
+      key="materials"
+      v-else-if="active === 'materials'"
+      v-loading="loading"
+      :data="items"
+      class="data-table"
+      empty-text="暂无物料"
+      ><el-table-column label="物料编码" width="160"
+        ><template slot-scope="s"
+          ><el-button
+            v-if="
+              s.row.spare_classification &&
+              s.row.spare_classification.material_type === 'spare'
+            "
+            type="text"
+            @click="analysisMaterial = s.row.code"
+            >{{ s.row.code }}</el-button
+          ><span v-else>{{ s.row.code }}</span></template
+        ></el-table-column
+      ><el-table-column label="物料类型" width="95"
+        ><template slot-scope="s">{{
+          s.row.spare_classification &&
+          s.row.spare_classification.material_type === "spare"
+            ? "备件"
+            : "生产件"
+        }}</template></el-table-column
+      ><el-table-column
+        prop="name"
+        label="名称"
+        min-width="150"
+      /><el-table-column
+        prop="specification"
+        label="规格"
+        min-width="150"
+      /><el-table-column
+        prop="category"
+        label="三级分类路径"
+        min-width="220"
+      /><el-table-column prop="unit" label="单位" width="70" /><el-table-column
+        prop="standard_price"
+        label="标准价"
+        width="100"
+      /><el-table-column label="操作" width="270"
+        ><template slot-scope="s"
+          ><el-button
+            v-if="
+              s.row.spare_classification &&
+              s.row.spare_classification.material_type === 'spare'
+            "
+            type="text"
+            @click="openAviation(s.row)"
+            >航空档案</el-button
+          ><el-button type="text" @click="openDocuments(s.row)"
+            >技术资料</el-button
+          ><el-button type="text" @click="edit(s.row)">编辑</el-button
+          ><el-button type="text" class="danger-link" @click="remove(s.row)"
+            >删除</el-button
+          ></template
+        ></el-table-column
+      ></el-table
+    >
+    <el-table
+      key="links"
+      v-else-if="active === 'links'"
+      v-loading="loading"
+      :data="items"
+      class="data-table"
+      empty-text="暂无供应商分类关联"
+      ><el-table-column
+        prop="supplier_code"
+        label="供应商编码"
+        width="145"
+      /><el-table-column
+        prop="supplier_name"
+        label="供应商"
+        min-width="170"
+      /><el-table-column
+        prop="category_code"
+        label="分类编码"
+        width="145"
+      /><el-table-column
+        prop="category_name"
+        label="分类路径"
+        min-width="220"
+      /><el-table-column label="覆盖级别" width="100"
+        ><template slot-scope="s"
+          >{{ s.row.category_level }}级</template
+        ></el-table-column
+      ><el-table-column label="资质状态" width="110"
+        ><template slot-scope="s"
+          ><el-tag :type="linkType(s.row.qualification_status)">{{
+            linkName(s.row.qualification_status)
+          }}</el-tag></template
+        ></el-table-column
+      ><el-table-column label="操作" width="130"
+        ><template slot-scope="s"
+          ><el-button type="text" @click="edit(s.row)">编辑</el-button
+          ><el-button type="text" class="danger-link" @click="remove(s.row)"
+            >删除</el-button
+          ></template
+        ></el-table-column
+      ></el-table
+    >
+    <el-table
+      key="governance"
+      v-else-if="active === 'governance'"
+      v-loading="loading"
+      :data="items"
+      class="data-table"
+      empty-text="当前阈值下没有疑似重复料"
+      ><el-table-column label="物料A" min-width="220"
+        ><template slot-scope="s"
+          ><strong>{{ s.row.left.code }} · {{ s.row.left.name }}</strong
+          ><br /><span
+            >{{ s.row.left.specification || "无规格" }} /
+            {{ s.row.left.unit }}</span
+          ></template
+        ></el-table-column
+      ><el-table-column label="物料B" min-width="220"
+        ><template slot-scope="s"
+          ><strong>{{ s.row.right.code }} · {{ s.row.right.name }}</strong
+          ><br /><span
+            >{{ s.row.right.specification || "无规格" }} /
+            {{ s.row.right.unit }}</span
+          ></template
+        ></el-table-column
+      ><el-table-column label="相似度" width="150"
+        ><template slot-scope="s"
+          ><el-progress
+            :percentage="Math.round(s.row.similarity * 100)"
+            :status="
+              s.row.similarity >= 0.85 ? 'success' : undefined
+            " /></template></el-table-column
+      ><el-table-column label="识别依据" min-width="240"
+        ><template slot-scope="s"
+          ><el-tag v-for="item in s.row.basis" :key="item" size="mini">{{
+            item
+          }}</el-tag></template
+        ></el-table-column
+      ><el-table-column label="评审状态" width="115"
+        ><template slot-scope="s"
+          ><el-tag :type="governanceType(s.row.status)">{{
+            governanceName(s.row.status)
+          }}</el-tag></template
+        ></el-table-column
+      ><el-table-column label="操作" width="100"
+        ><template slot-scope="s"
+          ><el-button type="text" @click="reviewDuplicate(s.row)"
+            >人工评审</el-button
+          ></template
+        ></el-table-column
+      ></el-table
+    >
+    <div class="pagination-row">
+      <span>共 {{ pagination.total }} 条</span
+      ><el-pagination
+        background
+        layout="sizes, prev, pager, next"
+        :page-sizes="[10, 20, 50]"
+        :current-page="pagination.page"
+        :page-size="pagination.page_size"
+        :total="pagination.total"
+        @current-change="changePage"
+        @size-change="changeSize"
+      />
+    </div>
 
-    <el-dialog v-if="active!=='governance'" :title="`${editingId?'编辑':'新增'}${activeLabel}`" :visible.sync="dialogVisible" width="650px" :close-on-click-modal="false"><el-form ref="form" :model="form" :rules="rules" label-width="110px">
-      <template v-if="active==='categories'"><el-form-item label="上级分类" prop="parent_id"><el-select v-model="form.parent_id" clearable :disabled="!!editingId" placeholder="留空创建一级分类" style="width:100%"><el-option v-for="c in parentOptions" :key="c.id" :label="`${c.code} ${c.path_name}`" :value="c.id"/></el-select></el-form-item><el-form-item v-if="!editingId" label="本级编码"><el-input v-model.trim="form.code_segment" maxlength="8" placeholder="可选：1-8位字母或数字；留空自动编号"/></el-form-item><el-form-item label="分类名称" prop="name"><el-input v-model.trim="form.name"/></el-form-item><el-form-item v-if="editingId" label="启用"><el-switch v-model="form.active"/></el-form-item><div class="form-tip">每级编码支持自定义，完整编码由上级编码拼接；留空时自动编号。已有编码保持稳定。</div></template>
-      <template v-else-if="active==='materials'"><SpareClassification v-if="form.spare_classification" v-model="form.spare_classification"/><el-row :gutter="16"><el-col :span="12"><el-form-item label="物料编码" prop="code"><el-input v-model.trim="form.code" :disabled="!!editingId"/></el-form-item></el-col><el-col :span="12"><el-form-item label="物料名称" prop="name"><el-input v-model.trim="form.name"/></el-form-item></el-col></el-row><el-form-item label="三级分类" prop="category_id"><el-cascader v-model="form.category_id" :options="categoryOptions" :props="{emitPath:false}" filterable placeholder="选择一级 → 二级 → 三级" style="width:100%" @change="suggestCode"/></el-form-item><el-form-item label="规格型号"><el-input v-model.trim="form.specification"/></el-form-item><el-row :gutter="16"><el-col :span="8"><el-form-item label="单位"><el-input v-model.trim="form.unit"/></el-form-item></el-col><el-col :span="8"><el-form-item label="标准价"><el-input-number v-model="form.standard_price" :min="0" :precision="2"/></el-form-item></el-col><el-col :span="8"><el-form-item label="提前期"><el-input-number v-model="form.lead_time_days" :min="0"/></el-form-item></el-col></el-row></template>
-      <template v-else><el-form-item label="供应商" prop="supplier_id"><el-select v-model="form.supplier_id" filterable :disabled="!!editingId" style="width:100%"><el-option v-for="s in suppliers" :key="s.id" :label="`${s.code} ${s.name}`" :value="s.id"/></el-select></el-form-item><el-form-item label="物料分类" prop="category_id"><el-select v-model="form.category_id" filterable :disabled="!!editingId" style="width:100%"><el-option v-for="c in allCategories" :key="c.id" :label="`${c.code} ${c.path_name}`" :value="c.id"/></el-select></el-form-item><el-form-item label="资质状态"><el-select v-model="form.qualification_status" style="width:100%"><el-option label="候选" value="candidate"/><el-option label="合格" value="qualified"/><el-option label="暂停" value="suspended"/></el-select></el-form-item></template>
-    </el-form><span slot="footer"><el-button @click="dialogVisible=false">取消</el-button><el-button type="primary" :loading="saving" @click="save">保存</el-button></span></el-dialog>
-    <MaterialSpareAnalysis :material="analysisMaterial" @close="analysisMaterial=''"/>
-    <el-dialog title="物料技术资料" :visible.sync="documentsVisible" width="1180px" top="4vh" :close-on-click-modal="false"><MaterialTechnicalDocuments v-if="documentsVisible&&documentMaterial" :material="documentMaterial"/></el-dialog>
-    <el-dialog title="重复料人工评审" :visible.sync="governanceVisible" width="680px" :close-on-click-modal="false"><template v-if="governanceRow"><el-alert title="系统只提供相似度线索；确认重复不会自动删除或改写历史单据。后续主数据合并必须经过影响检查。" type="warning" :closable="false"/><p><strong>{{governanceRow.left.code}} · {{governanceRow.left.name}}</strong> 与 <strong>{{governanceRow.right.code}} · {{governanceRow.right.name}}</strong></p><el-form label-width="110px"><el-form-item label="评审结论"><el-radio-group v-model="governanceDecision.status"><el-radio label="watchlist">保留观察</el-radio><el-radio label="duplicate">确认重复</el-radio><el-radio label="not_duplicate">确认非重复</el-radio></el-radio-group></el-form-item><el-form-item v-if="governanceDecision.status==='duplicate'" label="主物料"><el-radio-group v-model="governanceDecision.master_material_id"><el-radio :label="governanceRow.left.id">{{governanceRow.left.name}} {{governanceRow.left.code}}</el-radio><el-radio :label="governanceRow.right.id">{{governanceRow.right.name}} {{governanceRow.right.code}}</el-radio></el-radio-group></el-form-item><el-form-item label="评审说明"><el-input v-model.trim="governanceDecision.note" type="textarea" :rows="3" maxlength="1000"/></el-form-item></el-form></template><span slot="footer"><el-button @click="governanceVisible=false">取消</el-button><el-button type="primary" :loading="saving" @click="saveGovernance">保存评审</el-button></span></el-dialog>
-    <el-dialog title="行业分类导入预览" :visible.sync="importVisible" width="760px" :close-on-click-modal="false">
-      <template v-if="importPreview"><p>{{ importPreview.note }}</p><p>将导入 {{ importPreview.name }} 的 {{ importPreview.items.length }} 项分类；同编码同名称自动跳过，冲突时整批取消。</p>
-      <el-table :data="importPreview.items" height="360"><el-table-column prop="code" label="编码" width="170"/><el-table-column prop="name" label="分类名称"/><el-table-column prop="level" label="级别" width="70"/></el-table></template>
-      <span slot="footer"><el-button @click="importVisible=false">取消</el-button><el-button type="primary" :loading="importing" @click="importIndustry">确认导入</el-button></span>
+    <el-dialog
+      v-if="active !== 'governance'"
+      :title="`${editingId ? '编辑' : '新增'}${activeLabel}`"
+      :visible.sync="dialogVisible"
+      width="650px"
+      :close-on-click-modal="false"
+      ><el-form ref="form" :model="form" :rules="rules" label-width="110px">
+        <template v-if="active === 'categories'"
+          ><el-form-item label="上级分类" prop="parent_id"
+            ><el-select
+              v-model="form.parent_id"
+              clearable
+              :disabled="!!editingId"
+              placeholder="留空创建一级分类"
+              style="width: 100%"
+              ><el-option
+                v-for="c in parentOptions"
+                :key="c.id"
+                :label="`${c.code} ${c.path_name}`"
+                :value="c.id" /></el-select></el-form-item
+          ><el-form-item v-if="!editingId" label="本级编码"
+            ><el-input
+              v-model.trim="form.code_segment"
+              maxlength="8"
+              placeholder="可选：1-8位字母或数字；留空自动编号" /></el-form-item
+          ><el-form-item label="分类名称" prop="name"
+            ><el-input v-model.trim="form.name" /></el-form-item
+          ><el-form-item v-if="editingId" label="启用"
+            ><el-switch v-model="form.active"
+          /></el-form-item>
+          <div class="form-tip">
+            每级编码支持自定义，完整编码由上级编码拼接；留空时自动编号。已有编码保持稳定。
+          </div></template
+        >
+        <template v-else-if="active === 'materials'"
+          ><SpareClassification
+            v-if="form.spare_classification"
+            v-model="form.spare_classification" /><el-row :gutter="16"
+            ><el-col :span="12"
+              ><el-form-item label="物料编码" prop="code"
+                ><el-input
+                  v-model.trim="form.code"
+                  :disabled="!!editingId" /></el-form-item></el-col
+            ><el-col :span="12"
+              ><el-form-item label="物料名称" prop="name"
+                ><el-input
+                  v-model.trim="form.name" /></el-form-item></el-col></el-row
+          ><el-form-item label="三级分类" prop="category_id"
+            ><el-cascader
+              v-model="form.category_id"
+              :options="categoryOptions"
+              :props="{ emitPath: false }"
+              filterable
+              placeholder="选择一级 → 二级 → 三级"
+              style="width: 100%"
+              @change="suggestCode" /></el-form-item
+          ><el-form-item label="规格型号"
+            ><el-input v-model.trim="form.specification" /></el-form-item
+          ><el-row :gutter="16"
+            ><el-col :span="8"
+              ><el-form-item label="单位"
+                ><el-input v-model.trim="form.unit" /></el-form-item></el-col
+            ><el-col :span="8"
+              ><el-form-item label="标准价"
+                ><el-input-number
+                  v-model="form.standard_price"
+                  :min="0"
+                  :precision="2" /></el-form-item></el-col
+            ><el-col :span="8"
+              ><el-form-item label="提前期"
+                ><el-input-number
+                  v-model="form.lead_time_days"
+                  :min="0" /></el-form-item></el-col></el-row
+        ></template>
+        <template v-else
+          ><el-form-item label="供应商" prop="supplier_id"
+            ><el-select
+              v-model="form.supplier_id"
+              filterable
+              :disabled="!!editingId"
+              style="width: 100%"
+              ><el-option
+                v-for="s in suppliers"
+                :key="s.id"
+                :label="`${s.code} ${s.name}`"
+                :value="s.id" /></el-select></el-form-item
+          ><el-form-item label="物料分类" prop="category_id"
+            ><el-select
+              v-model="form.category_id"
+              filterable
+              :disabled="!!editingId"
+              style="width: 100%"
+              ><el-option
+                v-for="c in allCategories"
+                :key="c.id"
+                :label="`${c.code} ${c.path_name}`"
+                :value="c.id" /></el-select></el-form-item
+          ><el-form-item label="资质状态"
+            ><el-select v-model="form.qualification_status" style="width: 100%"
+              ><el-option label="候选" value="candidate" /><el-option
+                label="合格"
+                value="qualified" /><el-option
+                label="暂停"
+                value="suspended" /></el-select></el-form-item
+        ></template> </el-form
+      ><span slot="footer"
+        ><el-button @click="dialogVisible = false">取消</el-button
+        ><el-button type="primary" :loading="saving" @click="save"
+          >保存</el-button
+        ></span
+      ></el-dialog
+    >
+    <MaterialSpareAnalysis
+      :material="analysisMaterial"
+      @close="analysisMaterial = ''"
+    />
+    <el-dialog
+      title="航空MRO备件扩展档案"
+      :visible.sync="aviationVisible"
+      width="980px"
+      top="4vh"
+      :close-on-click-modal="false"
+      ><AviationMaterialProfile
+        v-if="aviationVisible && aviationMaterial"
+        :material="aviationMaterial"
+    /></el-dialog>
+    <el-dialog
+      title="物料技术资料"
+      :visible.sync="documentsVisible"
+      width="1180px"
+      top="4vh"
+      :close-on-click-modal="false"
+      ><MaterialTechnicalDocuments
+        v-if="documentsVisible && documentMaterial"
+        :material="documentMaterial"
+    /></el-dialog>
+    <el-dialog
+      title="重复料人工评审"
+      :visible.sync="governanceVisible"
+      width="680px"
+      :close-on-click-modal="false"
+      ><template v-if="governanceRow"
+        ><el-alert
+          title="系统只提供相似度线索；确认重复不会自动删除或改写历史单据。后续主数据合并必须经过影响检查。"
+          type="warning"
+          :closable="false" />
+        <p>
+          <strong
+            >{{ governanceRow.left.code }} ·
+            {{ governanceRow.left.name }}</strong
+          >
+          与
+          <strong
+            >{{ governanceRow.right.code }} ·
+            {{ governanceRow.right.name }}</strong
+          >
+        </p>
+        <el-form label-width="110px"
+          ><el-form-item label="评审结论"
+            ><el-radio-group v-model="governanceDecision.status"
+              ><el-radio label="watchlist">保留观察</el-radio
+              ><el-radio label="duplicate">确认重复</el-radio
+              ><el-radio label="not_duplicate"
+                >确认非重复</el-radio
+              ></el-radio-group
+            ></el-form-item
+          ><el-form-item
+            v-if="governanceDecision.status === 'duplicate'"
+            label="主物料"
+            ><el-radio-group v-model="governanceDecision.master_material_id"
+              ><el-radio :label="governanceRow.left.id"
+                >{{ governanceRow.left.name }}
+                {{ governanceRow.left.code }}</el-radio
+              ><el-radio :label="governanceRow.right.id"
+                >{{ governanceRow.right.name }}
+                {{ governanceRow.right.code }}</el-radio
+              ></el-radio-group
+            ></el-form-item
+          ><el-form-item label="评审说明"
+            ><el-input
+              v-model.trim="governanceDecision.note"
+              type="textarea"
+              :rows="3"
+              maxlength="1000" /></el-form-item></el-form></template
+      ><span slot="footer"
+        ><el-button @click="governanceVisible = false">取消</el-button
+        ><el-button type="primary" :loading="saving" @click="saveGovernance"
+          >保存评审</el-button
+        ></span
+      ></el-dialog
+    >
+    <el-dialog
+      title="行业分类导入预览"
+      :visible.sync="importVisible"
+      width="760px"
+      :close-on-click-modal="false"
+    >
+      <template v-if="importPreview"
+        ><p>{{ importPreview.note }}</p>
+        <p>
+          将导入 {{ importPreview.name }} 的
+          {{ importPreview.items.length }}
+          项分类；同编码同名称自动跳过，冲突时整批取消。
+        </p>
+        <el-table :data="importPreview.items" height="360"
+          ><el-table-column
+            prop="code"
+            label="编码"
+            width="170" /><el-table-column
+            prop="name"
+            label="分类名称" /><el-table-column
+            prop="level"
+            label="级别"
+            width="70" /></el-table
+      ></template>
+      <span slot="footer"
+        ><el-button @click="importVisible = false">取消</el-button
+        ><el-button type="primary" :loading="importing" @click="importIndustry"
+          >确认导入</el-button
+        ></span
+      >
     </el-dialog>
   </div>
 </template>
@@ -31,32 +535,480 @@
 <script>
 import MaterialSpareAnalysis from "../components/MaterialSpareAnalysis.vue";
 import MaterialTechnicalDocuments from "../components/MaterialTechnicalDocuments.vue";
-import SpareClassification from '../components/SpareClassification.vue';
-import { api, listQueryFilters, assignMaterialCategory, createMasterData, createMaterialCategory, createSupplierCategoryLink, deleteMasterData, deleteMaterialCategory, deleteSupplierCategoryLink, fetchMasterData, fetchMaterialAssignments, fetchMaterialCategoryTree, fetchSupplierCategoryLinks, updateMasterData, updateMaterialCategory, updateSupplierCategoryLink } from "../api/client";
+import SpareClassification from "../components/SpareClassification.vue";
+import AviationMaterialProfile from "../components/AviationMaterialProfile.vue";
+import {
+  api,
+  listQueryFilters,
+  assignMaterialCategory,
+  createMasterData,
+  createMaterialCategory,
+  createSupplierCategoryLink,
+  deleteMasterData,
+  deleteMaterialCategory,
+  deleteSupplierCategoryLink,
+  fetchMasterData,
+  fetchMaterialAssignments,
+  fetchMaterialCategoryTree,
+  fetchSupplierCategoryLinks,
+  updateMasterData,
+  updateMaterialCategory,
+  updateSupplierCategoryLink,
+} from "../api/client";
 
-const empty = { categories: () => ({ parent_id: null, name: "", code_segment: "", active: true }), materials: () => ({ spare_classification:{material_type:"production",abc:"B",ved:"E",fsn:"S",reason:""}, code: "", name: "", category_id: "", specification: "", unit: "件", standard_price: 0, safety_stock: 0, lead_time_days: 0, active: true }), links: () => ({ supplier_id: "", category_id: "", qualification_status: "qualified" }) };
+const empty = {
+  categories: () => ({
+    parent_id: null,
+    name: "",
+    code_segment: "",
+    active: true,
+  }),
+  materials: () => ({
+    spare_classification: {
+      material_type: "production",
+      abc: "B",
+      ved: "E",
+      fsn: "S",
+      reason: "",
+    },
+    code: "",
+    name: "",
+    category_id: "",
+    specification: "",
+    unit: "件",
+    standard_price: 0,
+    safety_stock: 0,
+    lead_time_days: 0,
+    active: true,
+  }),
+  links: () => ({
+    supplier_id: "",
+    category_id: "",
+    qualification_status: "qualified",
+  }),
+};
 export default {
-  components:{SpareClassification,MaterialSpareAnalysis,MaterialTechnicalDocuments},
-  data: () => ({ analysisMaterial:"",documentsVisible:false,documentMaterial:null,active: "categories", importVisible: false, importPreview: null, industry: "", importing: false, items: [], allCategories: [], suppliers: [], assignments: [], keyword: "", materialType:"",level: null, loading: false, saving: false, dialogVisible: false, editingId: "", form: empty.categories(), governanceThreshold:65, governanceStatus:"all", governanceVisible:false, governanceRow:null, governanceDecision:{status:"watchlist",master_material_id:"",note:""}, loadVersion:0, pagination: { page: 1, page_size: 10, total: 0 }, rules: { name: [{ required: true, message: "请输入名称", trigger: "blur" }], code: [{ required: true, message: "请输入编码", trigger: "blur" }], category_id: [{ required: true, message: "请选择物料分类", trigger: "change" }], supplier_id: [{ required: true, message: "请选择供应商", trigger: "change" }] } }),
-  computed: { activeLabel() { return { categories: "物料分类", materials: "物料", links: "供应商分类关联", governance:"重复料" }[this.active]; }, categoryOptions() { const build = (parent) => this.allCategories.filter(c => c.parent_id === parent && c.active).map(c => ({value:c.id,label:`${c.code} ${c.name}`,children:c.level<3?build(c.id):undefined})); return build(null); }, parentOptions() { return this.allCategories.filter(c => c.level < 3); }, leafCategories() { return this.allCategories.filter(c => c.level === 3 && c.active); } },
-  created() { this.loadReferences(); this.load(); },
+  components: {
+    SpareClassification,
+    MaterialSpareAnalysis,
+    MaterialTechnicalDocuments,
+    AviationMaterialProfile,
+  },
+  data: () => ({
+    aviationVisible: false,
+    aviationMaterial: null,
+    analysisMaterial: "",
+    documentsVisible: false,
+    documentMaterial: null,
+    active: "categories",
+    importVisible: false,
+    importPreview: null,
+    industry: "",
+    importing: false,
+    items: [],
+    allCategories: [],
+    suppliers: [],
+    assignments: [],
+    keyword: "",
+    materialType: "",
+    level: null,
+    loading: false,
+    saving: false,
+    dialogVisible: false,
+    editingId: "",
+    form: empty.categories(),
+    governanceThreshold: 65,
+    governanceStatus: "all",
+    governanceVisible: false,
+    governanceRow: null,
+    governanceDecision: {
+      status: "watchlist",
+      master_material_id: "",
+      note: "",
+    },
+    loadVersion: 0,
+    pagination: { page: 1, page_size: 10, total: 0 },
+    rules: {
+      name: [{ required: true, message: "请输入名称", trigger: "blur" }],
+      code: [{ required: true, message: "请输入编码", trigger: "blur" }],
+      category_id: [
+        { required: true, message: "请选择物料分类", trigger: "change" },
+      ],
+      supplier_id: [
+        { required: true, message: "请选择供应商", trigger: "change" },
+      ],
+    },
+  }),
+  computed: {
+    activeLabel() {
+      return {
+        categories: "物料分类",
+        materials: "物料",
+        links: "供应商分类关联",
+        governance: "重复料",
+      }[this.active];
+    },
+    categoryOptions() {
+      const build = (parent) =>
+        this.allCategories
+          .filter((c) => c.parent_id === parent && c.active)
+          .map((c) => ({
+            value: c.id,
+            label: `${c.code} ${c.name}`,
+            children: c.level < 3 ? build(c.id) : undefined,
+          }));
+      return build(null);
+    },
+    parentOptions() {
+      return this.allCategories.filter((c) => c.level < 3);
+    },
+    leafCategories() {
+      return this.allCategories.filter((c) => c.level === 3 && c.active);
+    },
+  },
+  created() {
+    this.loadReferences();
+    this.load();
+  },
   methods: {
-    openDocuments(row){this.documentMaterial=row;this.documentsVisible=true;},
-    async suggestCode() { if(this.editingId || !this.form.category_id) return; try { const response=await api.get(`/material-categories/${this.form.category_id}/next-material-code`); this.form.code=response.data.code; } catch(e) { this.$message.error("物料编码生成失败"); } },
-    async previewIndustry(industry) { try { const {data}=await api.get(`/material-categories/industry-templates/${industry}`); this.importPreview=data; this.industry=industry; this.importVisible=true; } catch(e) { this.$message.error("行业模板加载失败"); } },
-    async importIndustry() { this.importing=true; try { const {data}=await api.post(`/material-categories/import/${this.industry}`); this.$message.success(`新增 ${data.created} 项，跳过已有 ${data.skipped} 项`); this.importVisible=false; await this.loadReferences(); this.search(); } catch(e) { this.$message.error(e.response?.data?.detail || "导入失败"); } finally { this.importing=false; } },
-    linkName(v) { return { candidate: "候选", qualified: "合格", suspended: "暂停" }[v] || v; }, linkType(v) { return { qualified: "success", suspended: "warning" }[v] || ""; },
-    governanceName(v) { return {unreviewed:"待评审",watchlist:"保留观察",duplicate:"确认重复",not_duplicate:"确认非重复"}[v] || v; },
-    governanceType(v) { return {unreviewed:"warning",watchlist:"info",duplicate:"danger",not_duplicate:"success"}[v] || "info"; },
-    reviewDuplicate(row) { this.governanceRow=row; this.governanceDecision={status:row.status==='unreviewed'?'watchlist':row.status,master_material_id:row.master_material_id||row.left.id,note:row.note||""}; this.governanceVisible=true; },
-    async saveGovernance() { if(this.governanceDecision.status==='duplicate'&&!this.governanceDecision.master_material_id)return this.$message.warning("请选择主物料"); this.saving=true; try { await api.post("/material-governance/duplicate-decisions",{left_material_id:this.governanceRow.left.id,right_material_id:this.governanceRow.right.id,similarity:this.governanceRow.similarity,status:this.governanceDecision.status,master_material_id:this.governanceDecision.master_material_id,basis:this.governanceRow.basis,note:this.governanceDecision.note}); this.$message.success("重复料评审已保存"); this.governanceVisible=false; await this.load(); } catch(e) { this.$message.error(e.response?.data?.detail||"评审保存失败"); } finally { this.saving=false; } },
-    async loadReferences() { const [categories, supplierPage, assignments] = await Promise.all([fetchMaterialCategoryTree(), fetchMasterData("suppliers", { page: 1, page_size: 100, unfiltered: true }), fetchMaterialAssignments()]); this.allCategories = categories; this.suppliers = supplierPage.items; this.assignments = assignments; },
-    async load() { const version=++this.loadVersion; this.loading = true; try { let result; if (this.active === "categories") { this.allCategories = await fetchMaterialCategoryTree(); let matches=null; if(listQueryFilters["material-categories"]?.length){matches=new Set();let page=1,total=1;while((page-1)*100<total){const r=(await api.get("/material-categories",{params:{page,page_size:100}})).data;r.items.forEach(c=>matches.add(c.id));total=r.total;page++;}} const build = (parent) => this.allCategories.filter(c => c.parent_id === parent).map(c => ({...c,children:build(c.id)})).filter(c => ((!matches||matches.has(c.id)) && (!this.keyword || `${c.code} ${c.path_name}`.toLowerCase().includes(this.keyword.toLowerCase())) && (!this.level || c.level === this.level)) || c.children.length); const roots = build(null); result = {items:roots.slice((this.pagination.page-1)*this.pagination.page_size,this.pagination.page*this.pagination.page_size),total:roots.length}; } else if (this.active === "materials") result = await fetchMasterData("materials", { page: this.pagination.page, page_size: this.pagination.page_size, keyword: this.keyword,material_type:this.materialType }); else if(this.active === "links") result = await fetchSupplierCategoryLinks({ page: this.pagination.page, page_size: this.pagination.page_size }); else result=(await api.get("/material-governance/duplicates",{params:{keyword:this.keyword,threshold:this.governanceThreshold/100,decision_status:this.governanceStatus,page:this.pagination.page,page_size:this.pagination.page_size}})).data; if(version!==this.loadVersion)return; this.items = result.items; this.pagination.total = result.total; } catch (e) { if(version===this.loadVersion)this.$message.error(e.response?.data?.detail || "物料数据加载失败"); } finally { if(version===this.loadVersion)this.loading = false; } },
-    changeTab() { this.pagination.page = 1; this.pagination.total = 0; this.items = []; this.keyword = ""; this.level = null; this.load(); }, search() { this.pagination.page = 1; this.load(); }, reset() { this.materialType="";this.keyword = ""; this.level = null; this.search(); }, changePage(p) { this.pagination.page = p; this.load(); }, changeSize(s) { this.pagination.page_size = s; this.pagination.page = 1; this.load(); },
-    openCreate() { this.editingId = ""; this.form = empty[this.active](); this.dialogVisible = true; },
-    edit(row) { this.editingId = row.id; if (this.active === "materials") { const relation = this.assignments.find(a => a.material_id === row.id); this.form = { ...row, category_id: relation ? relation.category_id : "", standard_price: Number(row.standard_price) }; } else this.form = { ...row }; this.dialogVisible = true; },
-    async save() { this.$refs.form.validate(async valid => { if (!valid) return; this.saving = true; try { if (this.active === "categories") { if (this.editingId) await updateMaterialCategory(this.editingId, { name: this.form.name, active: this.form.active }); else await createMaterialCategory({ name: this.form.name, parent_id: this.form.parent_id || null, code_segment: this.form.code_segment || null }); } else if (this.active === "materials") { const { category_id, id, created_at, updated_at, created_by, category, ...payload } = this.form; let materialId = this.editingId; if (materialId) await updateMasterData("materials", materialId, payload); else materialId = (await createMasterData("materials", payload)).id; await assignMaterialCategory(materialId, category_id); } else if (this.editingId) await updateSupplierCategoryLink(this.editingId, { qualification_status: this.form.qualification_status }); else await createSupplierCategoryLink(this.form); this.$message.success(`${this.activeLabel}已保存`); this.dialogVisible = false; await this.loadReferences(); await this.load(); } catch (e) { this.$message.error(e.response && e.response.data && e.response.data.detail || "保存失败"); } finally { this.saving = false; } }); },
-    async remove(row) { try { await this.$confirm(`确定删除${this.activeLabel}吗？`, "删除确认", { type: "warning" }); if (this.active === "categories") await deleteMaterialCategory(row.id); else if (this.active === "materials") await deleteMasterData("materials", row.id); else await deleteSupplierCategoryLink(row.id); this.$message.success("删除成功"); await this.loadReferences(); await this.load(); } catch (e) { if (e !== "cancel") this.$message.error(e.response && e.response.data && e.response.data.detail || "删除失败"); } }
-  }
+    async seedAviationDemo() {
+      try {
+        await this.$confirm(
+          "将新增明确标识的航空MRO物料、公开资料参考供应商及虚构交易场景，不覆盖现有数据。",
+          "导入教学数据"
+        );
+        const r = (await api.post("/aviation-mro/demo")).data;
+        this.$message.success(
+          `已准备 ${r.result.materials} 项航空物料和 ${r.result.suppliers} 家供应渠道`
+        );
+        this.materialType = "spare";
+        await this.loadReferences();
+        await this.load();
+      } catch (e) {
+        if (e !== "cancel")
+          this.$message.error(e.response?.data?.detail || "导入失败");
+      }
+    },
+    openAviation(row) {
+      this.aviationMaterial = row;
+      this.aviationVisible = true;
+    },
+    openDocuments(row) {
+      this.documentMaterial = row;
+      this.documentsVisible = true;
+    },
+    async suggestCode() {
+      if (this.editingId || !this.form.category_id) return;
+      try {
+        const response = await api.get(
+          `/material-categories/${this.form.category_id}/next-material-code`
+        );
+        this.form.code = response.data.code;
+      } catch (e) {
+        this.$message.error("物料编码生成失败");
+      }
+    },
+    async previewIndustry(industry) {
+      try {
+        const { data } = await api.get(
+          `/material-categories/industry-templates/${industry}`
+        );
+        this.importPreview = data;
+        this.industry = industry;
+        this.importVisible = true;
+      } catch (e) {
+        this.$message.error("行业模板加载失败");
+      }
+    },
+    async importIndustry() {
+      this.importing = true;
+      try {
+        const { data } = await api.post(
+          `/material-categories/import/${this.industry}`
+        );
+        this.$message.success(
+          `新增 ${data.created} 项，跳过已有 ${data.skipped} 项`
+        );
+        this.importVisible = false;
+        await this.loadReferences();
+        this.search();
+      } catch (e) {
+        this.$message.error(e.response?.data?.detail || "导入失败");
+      } finally {
+        this.importing = false;
+      }
+    },
+    linkName(v) {
+      return (
+        { candidate: "候选", qualified: "合格", suspended: "暂停" }[v] || v
+      );
+    },
+    linkType(v) {
+      return { qualified: "success", suspended: "warning" }[v] || "";
+    },
+    governanceName(v) {
+      return (
+        {
+          unreviewed: "待评审",
+          watchlist: "保留观察",
+          duplicate: "确认重复",
+          not_duplicate: "确认非重复",
+        }[v] || v
+      );
+    },
+    governanceType(v) {
+      return (
+        {
+          unreviewed: "warning",
+          watchlist: "info",
+          duplicate: "danger",
+          not_duplicate: "success",
+        }[v] || "info"
+      );
+    },
+    reviewDuplicate(row) {
+      this.governanceRow = row;
+      this.governanceDecision = {
+        status: row.status === "unreviewed" ? "watchlist" : row.status,
+        master_material_id: row.master_material_id || row.left.id,
+        note: row.note || "",
+      };
+      this.governanceVisible = true;
+    },
+    async saveGovernance() {
+      if (
+        this.governanceDecision.status === "duplicate" &&
+        !this.governanceDecision.master_material_id
+      )
+        return this.$message.warning("请选择主物料");
+      this.saving = true;
+      try {
+        await api.post("/material-governance/duplicate-decisions", {
+          left_material_id: this.governanceRow.left.id,
+          right_material_id: this.governanceRow.right.id,
+          similarity: this.governanceRow.similarity,
+          status: this.governanceDecision.status,
+          master_material_id: this.governanceDecision.master_material_id,
+          basis: this.governanceRow.basis,
+          note: this.governanceDecision.note,
+        });
+        this.$message.success("重复料评审已保存");
+        this.governanceVisible = false;
+        await this.load();
+      } catch (e) {
+        this.$message.error(e.response?.data?.detail || "评审保存失败");
+      } finally {
+        this.saving = false;
+      }
+    },
+    async loadReferences() {
+      const [categories, supplierPage, assignments] = await Promise.all([
+        fetchMaterialCategoryTree(),
+        fetchMasterData("suppliers", {
+          page: 1,
+          page_size: 100,
+          unfiltered: true,
+        }),
+        fetchMaterialAssignments(),
+      ]);
+      this.allCategories = categories;
+      this.suppliers = supplierPage.items;
+      this.assignments = assignments;
+    },
+    async load() {
+      const version = ++this.loadVersion;
+      this.loading = true;
+      try {
+        let result;
+        if (this.active === "categories") {
+          this.allCategories = await fetchMaterialCategoryTree();
+          let matches = null;
+          if (listQueryFilters["material-categories"]?.length) {
+            matches = new Set();
+            let page = 1,
+              total = 1;
+            while ((page - 1) * 100 < total) {
+              const r = (
+                await api.get("/material-categories", {
+                  params: { page, page_size: 100 },
+                })
+              ).data;
+              r.items.forEach((c) => matches.add(c.id));
+              total = r.total;
+              page++;
+            }
+          }
+          const build = (parent) =>
+            this.allCategories
+              .filter((c) => c.parent_id === parent)
+              .map((c) => ({ ...c, children: build(c.id) }))
+              .filter(
+                (c) =>
+                  ((!matches || matches.has(c.id)) &&
+                    (!this.keyword ||
+                      `${c.code} ${c.path_name}`
+                        .toLowerCase()
+                        .includes(this.keyword.toLowerCase())) &&
+                    (!this.level || c.level === this.level)) ||
+                  c.children.length
+              );
+          const roots = build(null);
+          result = {
+            items: roots.slice(
+              (this.pagination.page - 1) * this.pagination.page_size,
+              this.pagination.page * this.pagination.page_size
+            ),
+            total: roots.length,
+          };
+        } else if (this.active === "materials")
+          result = await fetchMasterData("materials", {
+            page: this.pagination.page,
+            page_size: this.pagination.page_size,
+            keyword: this.keyword,
+            material_type: this.materialType,
+          });
+        else if (this.active === "links")
+          result = await fetchSupplierCategoryLinks({
+            page: this.pagination.page,
+            page_size: this.pagination.page_size,
+          });
+        else
+          result = (
+            await api.get("/material-governance/duplicates", {
+              params: {
+                keyword: this.keyword,
+                threshold: this.governanceThreshold / 100,
+                decision_status: this.governanceStatus,
+                page: this.pagination.page,
+                page_size: this.pagination.page_size,
+              },
+            })
+          ).data;
+        if (version !== this.loadVersion) return;
+        this.items = result.items;
+        this.pagination.total = result.total;
+      } catch (e) {
+        if (version === this.loadVersion)
+          this.$message.error(e.response?.data?.detail || "物料数据加载失败");
+      } finally {
+        if (version === this.loadVersion) this.loading = false;
+      }
+    },
+    changeTab() {
+      this.pagination.page = 1;
+      this.pagination.total = 0;
+      this.items = [];
+      this.keyword = "";
+      this.level = null;
+      this.load();
+    },
+    search() {
+      this.pagination.page = 1;
+      this.load();
+    },
+    reset() {
+      this.materialType = "";
+      this.keyword = "";
+      this.level = null;
+      this.search();
+    },
+    changePage(p) {
+      this.pagination.page = p;
+      this.load();
+    },
+    changeSize(s) {
+      this.pagination.page_size = s;
+      this.pagination.page = 1;
+      this.load();
+    },
+    openCreate() {
+      this.editingId = "";
+      this.form = empty[this.active]();
+      this.dialogVisible = true;
+    },
+    edit(row) {
+      this.editingId = row.id;
+      if (this.active === "materials") {
+        const relation = this.assignments.find((a) => a.material_id === row.id);
+        this.form = {
+          ...row,
+          category_id: relation ? relation.category_id : "",
+          standard_price: Number(row.standard_price),
+        };
+      } else this.form = { ...row };
+      this.dialogVisible = true;
+    },
+    async save() {
+      this.$refs.form.validate(async (valid) => {
+        if (!valid) return;
+        this.saving = true;
+        try {
+          if (this.active === "categories") {
+            if (this.editingId)
+              await updateMaterialCategory(this.editingId, {
+                name: this.form.name,
+                active: this.form.active,
+              });
+            else
+              await createMaterialCategory({
+                name: this.form.name,
+                parent_id: this.form.parent_id || null,
+                code_segment: this.form.code_segment || null,
+              });
+          } else if (this.active === "materials") {
+            const {
+              category_id,
+              id,
+              created_at,
+              updated_at,
+              created_by,
+              category,
+              ...payload
+            } = this.form;
+            let materialId = this.editingId;
+            if (materialId)
+              await updateMasterData("materials", materialId, payload);
+            else materialId = (await createMasterData("materials", payload)).id;
+            await assignMaterialCategory(materialId, category_id);
+          } else if (this.editingId)
+            await updateSupplierCategoryLink(this.editingId, {
+              qualification_status: this.form.qualification_status,
+            });
+          else await createSupplierCategoryLink(this.form);
+          this.$message.success(`${this.activeLabel}已保存`);
+          this.dialogVisible = false;
+          await this.loadReferences();
+          await this.load();
+        } catch (e) {
+          this.$message.error(
+            (e.response && e.response.data && e.response.data.detail) ||
+              "保存失败"
+          );
+        } finally {
+          this.saving = false;
+        }
+      });
+    },
+    async remove(row) {
+      try {
+        await this.$confirm(`确定删除${this.activeLabel}吗？`, "删除确认", {
+          type: "warning",
+        });
+        if (this.active === "categories") await deleteMaterialCategory(row.id);
+        else if (this.active === "materials")
+          await deleteMasterData("materials", row.id);
+        else await deleteSupplierCategoryLink(row.id);
+        this.$message.success("删除成功");
+        await this.loadReferences();
+        await this.load();
+      } catch (e) {
+        if (e !== "cancel")
+          this.$message.error(
+            (e.response && e.response.data && e.response.data.detail) ||
+              "删除失败"
+          );
+      }
+    },
+  },
 };
 </script>
