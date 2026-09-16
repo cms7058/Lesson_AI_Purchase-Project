@@ -10,6 +10,7 @@ from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.core.security import CurrentUser, UserRole, get_current_user
 from app.domain.persistence import MaterialRecord
+from app.domain.mro_intelligence import MroSupplyPositionRecord
 from app.domain.spare_operations import (
     SohInspectionRecord,
     SpareProcurementStrategyRecord,
@@ -17,6 +18,7 @@ from app.domain.spare_operations import (
     StocktakeRecord,
     WarehouseLocationRecord,
     WarehouseMovementRecord,
+    WarehousePickingTaskRecord,
     WarehouseRecord,
 )
 
@@ -276,6 +278,20 @@ def list_movements(keyword: str = "", movement_type: str = "", page_no: int = Qu
     return page(db, WarehouseMovementRecord, page_no, page_size, clause, WarehouseMovementRecord.happened_at.desc())
 
 
+@router.get("/warehouse-supply-positions")
+def list_supply_positions(keyword: str = "", position_type: str = "", page_no: int = Query(1, alias="page", ge=1), page_size: int = Query(10, ge=1, le=100), db: Session = Depends(get_db)):
+    clause = or_(MroSupplyPositionRecord.material_code.contains(keyword, autoescape=True), MroSupplyPositionRecord.warehouse_code.contains(keyword, autoescape=True), MroSupplyPositionRecord.source_ref.contains(keyword, autoescape=True))
+    if position_type: clause &= MroSupplyPositionRecord.position_type == position_type
+    return page(db, MroSupplyPositionRecord, page_no, page_size, clause, MroSupplyPositionRecord.created_at.desc())
+
+
+@router.get("/warehouse-picking-tasks")
+def list_picking_tasks(keyword: str = "", status: str = "", page_no: int = Query(1, alias="page", ge=1), page_size: int = Query(10, ge=1, le=100), db: Session = Depends(get_db)):
+    clause = or_(WarehousePickingTaskRecord.task_no.contains(keyword, autoescape=True), WarehousePickingTaskRecord.material_code.contains(keyword, autoescape=True), WarehousePickingTaskRecord.warehouse_code.contains(keyword, autoescape=True))
+    if status: clause &= WarehousePickingTaskRecord.status == status
+    return page(db, WarehousePickingTaskRecord, page_no, page_size, clause, WarehousePickingTaskRecord.created_at.desc())
+
+
 @router.post("/warehouse-movements", status_code=201)
 def post_movement(payload: MovementIn, db: Session = Depends(get_db), user: CurrentUser = Depends(get_current_user)):
     require_editor(user)
@@ -353,10 +369,17 @@ def warehouse_summary(db: Session = Depends(get_db)):
     excess = [s for s in stocks if s.max_stock > 0 and s.quantity > s.max_stock]
     care = [s for s in stocks if s.condition != "good"]
     dormant = [s for s in stocks if s.last_issue_date is None and s.quantity > 0]
+    positions = list(db.scalars(select(MroSupplyPositionRecord)))
+    position_counts = {
+        key: sum(1 for row in positions if row.position_type == key)
+        for key in ("owned", "consignment", "vmi", "repair_return")
+    }
     return {
         "warehouse_count": db.scalar(select(func.count()).select_from(WarehouseRecord)) or 0,
         "stock_skus": len(stocks), "stock_quantity": float(sum((s.quantity for s in stocks), Decimal(0))),
         "reorder_alerts": len(low), "excess_alerts": len(excess), "soh_alerts": len(care), "dormant_candidates": len(dormant),
+        "position_counts": position_counts,
+        "pending_picking_tasks": db.scalar(select(func.count()).select_from(WarehousePickingTaskRecord).where(WarehousePickingTaskRecord.status == "pending_pick")) or 0,
         "alerts": [{"type": "补货", "material_code": s.material_code, "warehouse_code": s.warehouse_code, "message": f"现存{s.quantity}≤再订货点{s.reorder_point}"} for s in low]
                   + [{"type": "保养", "material_code": s.material_code, "warehouse_code": s.warehouse_code, "message": f"SOH状态：{s.condition}"} for s in care],
         "lifecycle": [{"material_code": s.material_code, "batch_no": s.batch_no, "status": s.lifecycle_status, "source_system": s.source_system, "received_date": s.received_date, "last_issue_date": s.last_issue_date, "expiry_date": s.expiry_date} for s in stocks],

@@ -166,6 +166,23 @@
             ? "备件"
             : "生产件"
         }}</template></el-table-column
+      ><el-table-column label="MRO属性画像" min-width="230"
+        ><template slot-scope="s"
+          ><template v-if="isSpare(s.row)"
+            ><span
+              v-for="tag in (mroProfiles[s.row.code] || {}).attributes || []"
+              :key="tag.label"
+              class="mro-tag"
+              :style="{ borderColor: tag.color, color: tag.color, background: tag.color + '12' }"
+              >{{ tag.label }}</span
+            ><el-tag
+              v-if="!mroProfiles[s.row.code]"
+              size="mini"
+              type="info"
+              >待配置</el-tag
+            ></template
+          ><span v-else class="not-applicable">不适用</span></template
+        ></el-table-column
       ><el-table-column
         prop="name"
         label="名称"
@@ -182,8 +199,10 @@
         prop="standard_price"
         label="标准价"
         width="100"
-      /><el-table-column label="操作" width="270"
+      /><el-table-column label="操作" width="350"
         ><template slot-scope="s"
+          ><el-button v-if="isSpare(s.row)" type="text" @click="openMro(s.row)"
+            >MRO画像</el-button
           ><el-button
             v-if="
               s.row.spare_classification &&
@@ -424,6 +443,17 @@
       @close="analysisMaterial = ''"
     />
     <el-dialog
+      title="MRO物料多维画像"
+      :visible.sync="mroVisible"
+      width="900px"
+      top="4vh"
+      :close-on-click-modal="false"
+      ><MroMaterialProfile
+        v-if="mroVisible && mroMaterial"
+        :material="mroMaterial"
+        @saved="mroSaved"
+    /></el-dialog>
+    <el-dialog
       title="航空MRO备件扩展档案"
       :visible.sync="aviationVisible"
       width="980px"
@@ -534,6 +564,7 @@
 
 <script>
 import MaterialSpareAnalysis from "../components/MaterialSpareAnalysis.vue";
+import MroMaterialProfile from "../components/MroMaterialProfile.vue";
 import MaterialTechnicalDocuments from "../components/MaterialTechnicalDocuments.vue";
 import SpareClassification from "../components/SpareClassification.vue";
 import AviationMaterialProfile from "../components/AviationMaterialProfile.vue";
@@ -593,8 +624,12 @@ export default {
     MaterialSpareAnalysis,
     MaterialTechnicalDocuments,
     AviationMaterialProfile,
+    MroMaterialProfile,
   },
   data: () => ({
+    mroVisible: false,
+    mroMaterial: null,
+    mroProfiles: {},
     aviationVisible: false,
     aviationMaterial: null,
     analysisMaterial: "",
@@ -671,6 +706,28 @@ export default {
     this.load();
   },
   methods: {
+    isSpare(row) {
+      return row.spare_classification?.material_type === "spare";
+    },
+    openMro(row) {
+      this.mroMaterial = row;
+      this.mroVisible = true;
+    },
+    async mroSaved() {
+      await this.loadMroProfiles();
+    },
+    async loadMroProfiles() {
+      try {
+        const { data } = await api.get("/mro-intelligence/profiles", {
+          params: { page: 1, page_size: 100 },
+        });
+        this.mroProfiles = Object.fromEntries(
+          data.items.map((item) => [item.material_code, item])
+        );
+      } catch (error) {
+        this.mroProfiles = {};
+      }
+    },
     async seedAviationDemo() {
       try {
         await this.$confirm(
@@ -887,6 +944,7 @@ export default {
         if (version !== this.loadVersion) return;
         this.items = result.items;
         this.pagination.total = result.total;
+        if (this.active === "materials") await this.loadMroProfiles();
       } catch (e) {
         if (version === this.loadVersion)
           this.$message.error(e.response?.data?.detail || "物料数据加载失败");
@@ -1012,3 +1070,7 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.mro-tag{display:inline-block;margin:2px 4px 2px 0;padding:2px 7px;border:1px solid;border-radius:12px;font-size:11px}.not-applicable{color:#9aa7b4}
+</style>

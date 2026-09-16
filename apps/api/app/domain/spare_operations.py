@@ -99,6 +99,27 @@ class WarehouseMovementRecord(Base):
     happened_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 
+class WarehousePickingTaskRecord(Base):
+    """Warehouse work generated from an approved MRO supply activation."""
+
+    __tablename__ = "warehouse_picking_tasks"
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=lambda: str(uuid4()))
+    task_no: Mapped[str] = mapped_column(String(48), unique=True, index=True)
+    plan_run_id: Mapped[str] = mapped_column(String(36), default="", index=True)
+    plan_event_id: Mapped[str] = mapped_column(String(100), index=True)
+    material_code: Mapped[str] = mapped_column(String(64), index=True)
+    material_name: Mapped[str] = mapped_column(String(200), default="")
+    warehouse_code: Mapped[str] = mapped_column(String(64), index=True)
+    warehouse_type: Mapped[str] = mapped_column(String(32), default="owned", index=True)
+    location_code: Mapped[str] = mapped_column(String(64), default="")
+    quantity: Mapped[Decimal] = mapped_column(Numeric(18, 4))
+    status: Mapped[str] = mapped_column(String(24), default="pending_pick", index=True)
+    source_system: Mapped[str] = mapped_column(String(32), default="MRO_PLAN")
+    assigned_to: Mapped[str] = mapped_column(String(100), default="")
+    created_by: Mapped[str] = mapped_column(String(64), default="system")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
 class StocktakeRecord(Base):
     __tablename__ = "spare_stocktakes"
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=lambda: str(uuid4()))

@@ -46,6 +46,7 @@ export default new Router({
     { path: "/templates", component: lazy("Templates") },
     { path: "/workflows", component: lazy("Workflows") },
     { path: "/forecast", component: lazy("Forecasts") },
+    { path: "/mro-planning", component: lazy("MroPlanning") },
     { path: "/sourcing", component: lazy("Sourcing") },
     {
       path: "/suppliers",

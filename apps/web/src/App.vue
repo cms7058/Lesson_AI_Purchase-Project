@@ -179,7 +179,10 @@ export default {
       {
         label: "MRO需求计划中心",
         icon: "⌁",
-        items: [{ path: "/forecast", label: "需求预测与计划", icon: "⌁" }],
+        items: [
+          { path: "/mro-planning", label: "MRO预测与采购供货计划", icon: "▦" },
+          { path: "/forecast", label: "通用需求预测", icon: "⌁" },
+        ],
       },
       {
         label: "智能库存中心",

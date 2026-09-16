@@ -23,6 +23,7 @@ from app.api.routes import (
     material_costs,
     material_documents,
     material_governance,
+    mro_intelligence,
     orders,
     organization,
     planning,
@@ -74,6 +75,7 @@ api_router.include_router(health.router)
 api_router.include_router(fulfillment.router)
 api_router.include_router(master_data.router)
 api_router.include_router(material_governance.router)
+api_router.include_router(mro_intelligence.router)
 api_router.include_router(catalog.router)
 api_router.include_router(orders.router)
 api_router.include_router(connectors.router)

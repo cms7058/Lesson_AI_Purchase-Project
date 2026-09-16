@@ -11,6 +11,10 @@ class ConnectorType(StrEnum):
     SRM = "srm"
     QMS = "qms"
     WMS = "wms"
+    AMOS = "amos"
+    SAP = "sap"
+    CONSIGNMENT = "consignment"
+    VMI = "vmi"
     MINERU = "mineru"
     CUSTOM_API = "custom_api"
 

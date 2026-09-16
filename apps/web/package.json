@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@visactor/vtable-calendar": "^1.26.7",
     "@visactor/vtable-gantt": "1.26.7",
     "axios": "^1.7.9",
     "echarts": "^5.6.0",
