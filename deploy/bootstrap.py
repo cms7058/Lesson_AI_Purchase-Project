@@ -3,6 +3,7 @@ import json
 import os
 
 from app.core.database import Base, SessionLocal, engine
+import app.domain.teaching  # noqa: F401  Ensure login/learning tables are registered before create_all.
 from app.seed_demo import seed
 
 
