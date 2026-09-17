@@ -39,7 +39,7 @@ class StaffCreate(BaseModel):
     email: str = Field(default="", max_length=200)
     department: str = Field(default="采购部", max_length=120)
     title: str = Field(default="", max_length=120)
-    role: str = Field(default="buyer", pattern="^(admin|procurement_manager|buyer|analyst|auditor)$")
+    role: str = Field(default="buyer", pattern="^(admin|procurement_manager|buyer|analyst|auditor|instructor|student)$")
     status: str = Field(default="active", pattern="^(active|disabled)$")
 
 
@@ -48,7 +48,7 @@ class StaffUpdate(BaseModel):
     email: str | None = Field(default=None, max_length=200)
     department: str | None = Field(default=None, max_length=120)
     title: str | None = Field(default=None, max_length=120)
-    role: str | None = Field(default=None, pattern="^(admin|procurement_manager|buyer|analyst|auditor)$")
+    role: str | None = Field(default=None, pattern="^(admin|procurement_manager|buyer|analyst|auditor|instructor|student)$")
     status: str | None = Field(default=None, pattern="^(active|disabled)$")
 
 

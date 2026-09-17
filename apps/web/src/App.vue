@@ -225,7 +225,9 @@ export default {
         label: "系统与知识库",
         icon: "⚙",
         items: [
-          { path: "/personnel", label: "人员与权限", icon: "♙" },
+          { path: "/personnel", label: "系统人员管理", icon: "♙" },
+          { path: "/learning-center", label: "学员考试与学习", icon: "✓" },
+          { path: "/training-admin", label: "课件与授课文件", icon: "▧" },
           { path: "/factories", label: "工厂主数据", icon: "⌂" },
           { path: "/templates", label: "业务模板", icon: "◇" },
           { path: "/workflows", label: "自动化工作流", icon: "⌁" },
