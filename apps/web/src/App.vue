@@ -9,7 +9,7 @@
         </router-link>
         <nav>
           <section
-            v-for="group in navGroups"
+            v-for="group in visibleNavGroups"
             :key="group.label"
             class="nav-group"
           >
@@ -53,7 +53,7 @@
             <strong>AI助力 · 智能项目与采购教学平台</strong
             ><span>演示 · 实训 · 决策复盘</span>
           </div>
-          <div class="user-chip">{{ user.organization }} · {{ user.name }}</div>
+          <div class="topbar-account"><div class="user-chip">{{ user.organization }} · {{ user.name }}</div><el-button size="mini" @click="logout">退出</el-button></div>
         </header>
         <section class="page">
           <ListFilters @query="queryList" /><router-view ref="pageView" />
@@ -71,23 +71,29 @@ import BrandMark from "./components/BrandMark.vue";
 export default {
   components: { ListFilters, FloatingAssistant, BrandMark },
   created() {
-    if (!this.$route.meta.standalone) this.$store.dispatch("loadIdentity");
+    if (!this.$route.meta.standalone && localStorage.getItem("ai-assist-system-token")) this.$store.dispatch("loadIdentity").catch(() => this.$router.replace("/login"));
   },
   watch: {
     $route(route) {
-      if (!route.meta.standalone && !this.user.role)
-        this.$store.dispatch("loadIdentity");
+      if (!route.meta.standalone && !this.user.role && localStorage.getItem("ai-assist-system-token"))
+        this.$store.dispatch("loadIdentity").catch(() => this.$router.replace("/login"));
     },
   },
   computed: {
     user() {
       return this.$store.state.user;
     },
+    visibleNavGroups() {
+      if (this.user.role !== "student") return this.navGroups;
+      const blocked = new Set(["/personnel", "/learning-center", "/training-admin"]);
+      return this.navGroups.map(group => ({ ...group, items: group.items.filter(item => !blocked.has(item.path)) }));
+    },
   },
   methods: {
     toggle(label) {
       this.$set(this.opened, label, !this.opened[label]);
     },
+    async logout() { await this.$store.dispatch("logout"); this.$router.replace("/login"); },
     queryList(resource) {
       const view = this.$refs.pageView;
       if (!view) return;

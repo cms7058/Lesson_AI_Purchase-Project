@@ -42,6 +42,7 @@ from app.api.routes import (
     supplier_portal,
     supplier_qualifications,
     supply_feedback,
+    system_auth,
     teaching,
     template_links,
     templates,
@@ -60,6 +61,7 @@ api_router.include_router(doe.router)
 api_router.include_router(equipment_mro.router)
 api_router.include_router(inventory_intelligence.router)
 api_router.include_router(knowledge.router)
+api_router.include_router(system_auth.router)
 api_router.include_router(teaching.router)
 api_router.include_router(projects.router)
 api_router.include_router(project_access.router)

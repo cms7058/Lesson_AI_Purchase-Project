@@ -25,6 +25,8 @@ class Settings(BaseSettings):
     smtp_password: str = ""
     smtp_from_email: str = ""
     smtp_use_tls: bool = True
+    system_admin_username: str = "admin"
+    system_admin_password: str = "admin123456"
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 

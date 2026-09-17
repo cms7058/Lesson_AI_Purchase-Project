@@ -20,6 +20,10 @@ def pdf_bytes() -> bytes:
 
 def test_learning_account_exam_and_material_closed_loop():
     marker = uuid4().hex[:8]
+    admin_login = client.post("/api/v1/auth/login", json={"username": "admin", "password": "admin123456"})
+    assert admin_login.status_code == 200
+    admin = {"Authorization": f"Bearer {admin_login.json()['token']}"}
+    assert client.get("/api/v1/auth/me", headers=admin).json()["role"] == "admin"
     staff = client.post(
         "/api/v1/staff-users",
         headers=MANAGER,
@@ -39,6 +43,13 @@ def test_learning_account_exam_and_material_closed_loop():
         json={"staff_id": staff.json()["id"], "username": f"student-{marker}", "password": "Study@2026", "active": True},
     )
     assert account.status_code == 201, account.text
+    system_login = client.post("/api/v1/auth/login", json={"username": f"student-{marker}", "password": "Study@2026"})
+    assert system_login.status_code == 200
+    student_system = {"Authorization": f"Bearer {system_login.json()['token']}"}
+    assert client.get("/api/v1/auth/me", headers=student_system).json()["role"] == "student"
+    assert client.get("/api/v1/training-materials", headers=student_system).status_code == 403
+    assert client.post("/api/v1/auth/logout", headers=student_system).status_code == 200
+    assert client.get("/api/v1/auth/me", headers=student_system).status_code == 401
     logged = client.post("/api/v1/learning/login", json={"username": f"student-{marker}", "password": "Study@2026"})
     assert logged.status_code == 200, logged.text
     learner = {"Authorization": f"Bearer {logged.json()['token']}"}

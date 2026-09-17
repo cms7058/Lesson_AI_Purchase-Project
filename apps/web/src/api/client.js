@@ -4,11 +4,12 @@ export const listQueryFilters = {};
 
 export const api = axios.create({
   baseURL: process.env.VUE_APP_API_BASE_URL || "/api/v1",
-  timeout: 20000,
-  headers: { "X-User-Id": "demo-manager", "X-User-Role": "procurement_manager" }
+  timeout: 20000
 });
 
 api.interceptors.request.use(config => {
+  const token = localStorage.getItem("ai-assist-system-token");
+  if (token && !config.headers.Authorization) config.headers.Authorization = `Bearer ${token}`;
   const resource = (config.url || '').replace(/^\//, '');
   if (config.method === 'get' && config.params?.page && !config.unfiltered && !config.params.unfiltered && listQueryFilters[resource]?.length) {
     config.params = {...config.params, filters: JSON.stringify(listQueryFilters[resource])};
@@ -17,6 +18,9 @@ api.interceptors.request.use(config => {
 });
 
 export const fetchModules = () => api.get("/modules").then((response) => response.data);
+export const systemLogin = (payload) => api.post("/auth/login", payload).then((response) => response.data);
+export const systemMe = () => api.get("/auth/me").then((response) => response.data);
+export const systemLogout = () => api.post("/auth/logout").then((response) => response.data);
 export const fetchOrders = (params) => api.get("/orders", { params }).then((response) => response.data);
 export const createOrder = (payload) => api.post("/orders", payload).then((response) => response.data);
 export const updateOrder = (id, payload) => api.patch(`/orders/${id}`, payload).then((response) => response.data);

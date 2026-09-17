@@ -41,6 +41,7 @@ npm run serve
 - 系统人员管理：http://localhost:8080/personnel
 - 课件与考试管理：http://localhost:8080/training-admin
 - 学员独立登录入口：http://localhost:8080/learning
+- 系统登录页：http://localhost:8080/login（教学管理员默认账号 `admin / admin123456`，公网部署前应通过环境变量修改密码）
 - API文档：http://localhost:8000/docs
 - 健康检查：http://localhost:8000/api/v1/health
 

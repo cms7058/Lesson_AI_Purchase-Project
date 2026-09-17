@@ -32,6 +32,18 @@ class LearningSessionRecord(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
 
 
+class SystemSessionRecord(Base):
+    __tablename__ = "system_sessions"
+
+    token_hash: Mapped[str] = mapped_column(String(64), primary_key=True)
+    user_id: Mapped[str] = mapped_column(String(64), index=True)
+    username: Mapped[str] = mapped_column(String(100), index=True)
+    role: Mapped[str] = mapped_column(String(40), index=True)
+    display_name: Mapped[str] = mapped_column(String(120), default="")
+    expires_at: Mapped[datetime] = mapped_column(DateTime, index=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
+
+
 class ExamAttemptRecord(Base):
     __tablename__ = "exam_attempts"
 
