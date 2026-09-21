@@ -2,12 +2,13 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-import app.domain.persistence
 from app.api.router import api_router
 from app.core.config import get_settings
 from app.core.database import Base, engine
+from app.domain.model_registry import load_all_models
 
 settings = get_settings()
+load_all_models()
 
 app = FastAPI(
     title=settings.app_name,

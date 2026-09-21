@@ -59,3 +59,24 @@ def test_bad_formats_and_dates():
     assert client.post('/api/v1/projects/import-file', headers=H, files={'file': ('bad.docx', raw.getvalue())}).status_code == 422
     result = preview('交付：2026年02月30日\n验收：2026-10-01至2026-10-05')
     assert all(t['finish'] is None for t in result['draft']['tasks'])
+
+
+def test_searchable_pdf_falls_back_to_local_extractor(monkeypatch):
+    from app.services.mineru_client import MinerUError
+
+    async def unavailable(*_args, **_kwargs):
+        raise MinerUError('MinerU不可用')
+
+    monkeypatch.setattr('app.services.mineru_client.extract_pdf', unavailable)
+    monkeypatch.setattr(
+        'app.services.project_text_import.extract_pdf_text',
+        lambda _raw: (TEXT, 'Poppler/pdftotext'),
+    )
+    response = client.post(
+        '/api/v1/projects/import-file',
+        headers=H,
+        files={'file': ('searchable.pdf', b'%PDF-1.7\nsearchable')},
+    )
+    assert response.status_code == 200
+    assert response.json()['draft']['name'] == '装配设备交付'
+    assert any('Poppler/pdftotext' in note for note in response.json()['warnings'])

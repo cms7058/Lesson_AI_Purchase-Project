@@ -69,15 +69,11 @@ async def import_file(file: UploadFile = File(...), db=Depends(get_db)):
             text, engine = await extract_pdf(raw, filename, connector.base_url if connector else '')
             notes = [f'{engine}已提取PDF版式、表格和OCR文本；结果仅生成项目草稿，须对照原文复核。']
         except MinerUError as mineru_error:
-            try:
-                from pypdf import PdfReader
-                import io
-                text = '\n'.join(page.extract_text() or '' for page in PdfReader(io.BytesIO(raw)).pages).strip()
-            except Exception:
-                text = ''
+            from app.services.project_text_import import extract_pdf_text
+            text, local_engine = extract_pdf_text(raw)
             if len(text) < 10:
                 raise HTTPException(422, str(mineru_error) + '；本地也未提取到文本，请配置并启用MinerU连接器') from None
-            notes = ['MinerU不可用，本次回退为本地PDF文本提取；扫描内容、表格和版式可能缺失，请核查原文件。']
+            notes = [f'MinerU不可用，本次使用{local_engine}提取可检索文本；扫描内容、表格和版式可能缺失，请核查原文件。']
     else:
         text, notes = extract(raw, filename)
     if len(text) > 20000:

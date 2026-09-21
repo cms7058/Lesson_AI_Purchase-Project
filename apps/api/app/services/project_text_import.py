@@ -2,6 +2,8 @@
 import hashlib
 import io
 import re
+import subprocess
+import tempfile
 import zipfile
 from datetime import date
 from email import policy
@@ -35,6 +37,44 @@ class PlainHTML(HTMLParser):
     def handle_data(self, data):
         if not self.hidden:
             self.parts.append(data)
+
+
+def extract_pdf_text(raw: bytes) -> tuple[str, str]:
+    """Extract searchable PDF text locally without treating the file as trusted input."""
+    text = ""
+    try:
+        from pypdf import PdfReader
+        from pypdf.errors import PyPdfError
+    except ImportError:
+        pass
+    else:
+        try:
+            text = "\n".join(
+                page.extract_text() or "" for page in PdfReader(io.BytesIO(raw)).pages
+            ).strip()
+        except (PyPdfError, ValueError, TypeError, OSError, EOFError):
+            text = ""
+    if len(text) >= 10:
+        return text, "pypdf"
+
+    try:
+        with tempfile.TemporaryDirectory(prefix="project-pdf-") as directory:
+            source = Path(directory) / "source.pdf"
+            output = Path(directory) / "content.txt"
+            source.write_bytes(raw)
+            completed = subprocess.run(
+                ["pdftotext", "-layout", "-enc", "UTF-8", str(source), str(output)],
+                stdin=subprocess.DEVNULL,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+                timeout=30,
+                check=False,
+            )
+            if completed.returncode == 0 and output.exists():
+                text = output.read_bytes()[: 2 * 1024 * 1024].decode("utf-8", errors="replace").strip()
+    except (OSError, subprocess.SubprocessError):
+        text = ""
+    return text, "Poppler/pdftotext" if len(text) >= 10 else ""
 
 
 def extract(raw, filename):
