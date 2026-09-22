@@ -186,7 +186,6 @@ export default {
         label: "MRO需求计划中心",
         icon: "⌁",
         items: [
-          { path: "/mro-planning", label: "MRO预测与采购供货计划", icon: "▦" },
           { path: "/forecast", label: "通用需求预测", icon: "⌁" },
         ],
       },
@@ -195,19 +194,19 @@ export default {
         icon: "▥",
         items: [
           { path: "/warehouse", label: "库存与仓储管理", icon: "▤" },
-          {
-            path: "/inventory-intelligence",
-            label: "智能库存与LCC",
-            icon: "∑",
-          },
+          { path: "/inventory-intelligence", label: "智能库存与LCC", icon: "∑" },
         ],
       },
       {
         label: "设备与备件中心",
         icon: "◇",
         items: [
-          { path: "/equipment-mro", label: "设备与MRO闭环", icon: "⚙" },
-          { path: "/spare-strategies", label: "备件采购策略", icon: "⌁" },
+          { path: "/equipment-mro?view=procurement", label: "设备备件采购", icon: "⚙" },
+          { path: "/spare-strategies?view=risk", label: "设备备件风险评估", icon: "◇" },
+          { path: "/mro-planning?view=forecast", label: "备件需求预测", icon: "▦" },
+          { path: "/inventory-intelligence?view=supply", label: "备件供应保障", icon: "⇄" },
+          { path: "/spare-strategies?view=recommendation", label: "备件采购建议", icon: "⌁" },
+          { path: "/equipment-mro?view=history", label: "备件历史采购与维修回转", icon: "↻" },
         ],
       },
       {
