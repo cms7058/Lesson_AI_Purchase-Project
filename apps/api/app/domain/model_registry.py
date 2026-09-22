@@ -6,6 +6,10 @@ be loaded explicitly before ``Base.metadata.create_all`` is called.
 from importlib import import_module
 
 MODEL_MODULES = (
+    # These two legacy route modules still own their SQLAlchemy records. Keep
+    # them in the bootstrap registry until the models are moved to domain files.
+    "app.api.routes.doe",
+    "app.api.routes.strategy_decision",
     "app.domain.aviation_mro",
     "app.domain.contract_reviews",
     "app.domain.equipment_mro",

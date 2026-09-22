@@ -91,3 +91,26 @@ def test_contract_review_docx_upload_new_version_and_permissions() -> None:
     assert client.delete(f"/api/v1/contract-documents/{second.json()['id']}", headers=manager).status_code == 204
     workspace = client.get(f"/api/v1/contracts/{contract['id']}/review-workspace").json()
     assert workspace["documents"][0]["version"] == 1
+
+
+def test_contract_pdf_upload_extracts_chinese_text(monkeypatch) -> None:
+    from reportlab.pdfbase import pdfmetrics
+    from reportlab.pdfbase.cidfonts import UnicodeCIDFont
+    from reportlab.pdfgen import canvas
+
+    buyer = {"X-User-Id": "buyer-pdf", "X-User-Role": "buyer"}
+    contract = create_contract(buyer, uuid4().hex[:8])
+    pdfmetrics.registerFont(UnicodeCIDFont("STSong-Light"))
+    buffer = BytesIO()
+    document = canvas.Canvas(buffer)
+    document.setFont("STSong-Light", 12)
+    document.drawString(72, 760, "采购合同 合同金额100000元 交付期为30日 付款验收后结算")
+    document.save()
+    response = client.post(
+        f"/api/v1/contracts/{contract['id']}/documents",
+        headers=buyer,
+        files={"file": ("采购合同.pdf", buffer.getvalue(), "application/pdf")},
+    )
+    assert response.status_code == 201
+    assert response.json()["extraction_mode"] == "pdf_text"
+    assert response.json()["text_length"] >= 30

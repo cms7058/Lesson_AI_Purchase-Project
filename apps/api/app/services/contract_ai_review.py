@@ -54,12 +54,19 @@ def extract_contract_text(raw: bytes, filename: str) -> tuple[str, str]:
             source, output = Path(directory) / "source.pdf", Path(directory) / "content.txt"
             source.write_bytes(raw)
             try:
-                result = subprocess.run(["pdftotext", "-layout", str(source), str(output)], capture_output=True, timeout=25, check=False)
+                result = subprocess.run(["pdftotext", "-layout", "-enc", "UTF-8", str(source), str(output)], capture_output=True, timeout=25, check=False)
             except (FileNotFoundError, subprocess.TimeoutExpired) as exc:
                 raise ContractParseError("PDF文本解析服务不可用，请检查Poppler组件") from exc
             if result.returncode or not output.is_file():
                 raise ContractParseError("PDF无法读取，可能已加密或文件损坏")
             text = output.read_text("utf-8", errors="replace")
+        if len(text.strip()) < 30:
+            try:
+                from pypdf import PdfReader
+
+                text = "\n".join(page.extract_text() or "" for page in PdfReader(io.BytesIO(raw)).pages)
+            except (ImportError, OSError, TypeError, ValueError):
+                text = ""
         mode = "pdf_text"
     else:
         raise ContractParseError("合同文件仅支持TXT、DOCX和可检索文本PDF")

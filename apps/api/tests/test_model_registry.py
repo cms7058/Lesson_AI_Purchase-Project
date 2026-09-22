@@ -14,5 +14,7 @@ def test_registry_contains_project_and_teaching_tables():
         "learning_accounts",
         "exam_attempts",
         "training_materials",
+        "toc_doe_studies",
+        "spare_strategy_decisions",
     }
     assert required <= set(Base.metadata.tables)
