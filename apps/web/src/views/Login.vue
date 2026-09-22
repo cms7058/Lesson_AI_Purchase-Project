@@ -13,7 +13,6 @@
         <el-form-item prop="password"><el-input v-model="form.password" type="password" show-password prefix-icon="el-icon-lock" placeholder="密码" autocomplete="current-password"/></el-form-item>
         <el-button type="primary" class="login-button" :loading="loading" @click="submit">登录</el-button>
       </el-form>
-      <el-alert title="教学管理员默认账号：admin / admin123456" type="info" :closable="false" show-icon/>
       <div class="system-login-links"><router-link to="/">返回首页</router-link><router-link to="/learning">进入学员学习中心</router-link></div>
     </el-card>
   </main>
