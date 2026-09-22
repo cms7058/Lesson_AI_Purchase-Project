@@ -14,6 +14,7 @@ from app.domain.persistence import DataConnectorRecord, StaffUserRecord
 from app.domain.projects import ProjectBaseline, ProjectInput, ProjectRecord, project_data
 from app.services.audit_service import write_audit_log
 from app.services.project_access import project_access, roles
+from app.services.project_templates import APQP_TEMPLATE_ID, apqp_template, list_templates
 
 router = APIRouter(prefix='/projects', tags=['projects'], dependencies=[Depends(project_access)])
 
@@ -147,6 +148,16 @@ def list_projects(keyword: str = '', status: str = '', page: int = Query(1, ge=1
 
 @router.post('')
 def create(data: ProjectInput, db=Depends(get_db), user=Depends(get_current_user)):
+    # Also apply the template server-side so API clients and fast clicks cannot
+    # accidentally create an empty APQP project after selecting the template.
+    if data.template_id == APQP_TEMPLATE_ID and not data.tasks:
+        template = apqp_template()
+        data = ProjectInput.model_validate({
+            **data.model_dump(),
+            'project_type': template['project_type'],
+            'tasks': template['tasks'],
+            'quality_requirements': template['quality_requirements'],
+        })
     validate_staff(db, data)
     record = ProjectRecord(code=data.code, name=data.name, status=data.status, payload=data.model_dump_json())
     db.add(record)
@@ -158,6 +169,11 @@ def create(data: ProjectInput, db=Depends(get_db), user=Depends(get_current_user
         db.rollback()
         raise HTTPException(409, '项目编号重复') from None
     return project_data(record)
+
+
+@router.get('/templates')
+def templates():
+    return {'items': list_templates(), 'default_id': APQP_TEMPLATE_ID}
 
 
 @router.get('/{project_id}')

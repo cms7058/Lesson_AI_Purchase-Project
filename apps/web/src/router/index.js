@@ -20,6 +20,7 @@ const router = new Router({
     { path: "/spares", redirect: "/requisitions" },
     { path: "/spare-strategies", component: lazy("SpareStrategies") },
     { path: "/equipment-mro", component: lazy("EquipmentMRO") },
+    { path: "/equipment-spare-risk", component: lazy("EquipmentSpareRisk") },
     { path: "/warehouse", component: lazy("WarehouseManagement") },
     {
       path: "/inventory-intelligence",

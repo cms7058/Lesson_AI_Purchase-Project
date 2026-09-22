@@ -35,6 +35,31 @@ def test_graph_and_publishing():
     assert client.get('/api/v1/projects', headers={'X-User-Role': 'buyer'}).json()['total'] == 0
 
 
+def test_apqp_project_template_contains_quality_gates_and_ppap_tasks():
+    response = client.get('/api/v1/projects/templates', headers=H)
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload['default_id'] == 'apqp-exhaust-weld-pipe-v1'
+    template = payload['items'][0]
+    assert template['project_type'] == 'apqp_exhaust_weld_pipe'
+    assert template['gate_count'] == 6
+    assert {item['code'] for item in template['quality_requirements']} >= {'APQP-1', 'APQP-3', 'PPAP'}
+    assert any(item['apqp_stage'] == 'PPAP' for item in template['tasks'])
+
+
+def test_create_apqp_project_automatically_applies_template():
+    response = client.post('/api/v1/projects', headers=H, json={
+        'code': 'APQP-AUTO-'+uuid4().hex[:8],
+        'name': 'APQP自动载入验证',
+        'template_id': 'apqp-exhaust-weld-pipe-v1',
+        'project_type': 'apqp_exhaust_weld_pipe',
+    })
+    assert response.status_code == 200, response.text
+    payload = response.json()
+    assert len(payload['tasks']) >= 20
+    assert any(item['code'] == 'PPAP' for item in payload['quality_requirements'])
+
+
 def test_xml_draft_no_persistence():
     raw = b'<Project><Name>Test</Name><Tasks><Task><UID>1</UID><Name>Design</Name><OutlineLevel>1</OutlineLevel><Start>2026-09-01T08:00:00</Start><Finish>2026-09-10T17:00:00</Finish></Task></Tasks></Project>'
     result = xml_preview(raw)

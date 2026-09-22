@@ -173,8 +173,11 @@ import { api } from "../api/client";
 import AnalysisChart from "./AnalysisChart.vue";
 export default {
   components: { AnalysisChart },
-  props: { supplierMode: Boolean },
+  props: { supplierMode: Boolean, pageGuide: { type: String, default: "" } },
   data: () => ({ message: "", messages: [], sending: false, identity: "" }),
+  created() {
+    if (this.pageGuide) this.messages.push({ role: "assistant", text: this.pageGuide, guide: true });
+  },
   methods: {
     handleComposerKeydown(event) {
       if (

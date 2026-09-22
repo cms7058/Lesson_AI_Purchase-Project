@@ -141,7 +141,8 @@ export default {
       物料主数据中心: true,
       MRO需求计划中心: true,
       智能库存中心: true,
-      设备与备件中心: true,
+      MRO备件中心: true,
+      设备备件中心: true,
       合同与成本中心: true,
       AI决策中心: true,
       系统与知识库: true,
@@ -198,15 +199,22 @@ export default {
         ],
       },
       {
-        label: "设备与备件中心",
+        label: "MRO备件中心",
         icon: "◇",
         items: [
-          { path: "/equipment-mro?view=procurement", label: "设备备件采购", icon: "⚙" },
-          { path: "/spare-strategies?view=risk", label: "设备备件风险评估", icon: "◇" },
+          { path: "/equipment-mro?view=procurement", label: "MRO备件采购", icon: "⚙" },
+          { path: "/spare-strategies?view=risk", label: "MRO备件风险评估", icon: "◇" },
           { path: "/mro-planning?view=forecast", label: "备件需求预测", icon: "▦" },
           { path: "/inventory-intelligence?view=supply", label: "备件供应保障", icon: "⇄" },
           { path: "/spare-strategies?view=recommendation", label: "备件采购建议", icon: "⌁" },
           { path: "/equipment-mro?view=history", label: "备件历史采购与维修回转", icon: "↻" },
+        ],
+      },
+      {
+        label: "设备备件中心",
+        icon: "◈",
+        items: [
+          { path: "/equipment-spare-risk", label: "设备备件风险评估", icon: "◈" },
         ],
       },
       {

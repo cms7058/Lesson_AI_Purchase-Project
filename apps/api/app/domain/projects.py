@@ -41,6 +41,7 @@ class ProjectTask(BaseModel):
     progress: int = Field(default=0, ge=0, le=100)
     predecessors: list[str] = Field(default_factory=list, max_length=100)
     source: str = Field(default='', max_length=1000)
+    apqp_stage: str = Field(default='', max_length=40)
 
     @model_validator(mode='after')
     def dates(self):
@@ -59,6 +60,16 @@ class ProjectImportEvidence(BaseModel):
     warnings: list[str] = Field(default_factory=list, max_length=30)
 
 
+class ProjectQualityRequirement(BaseModel):
+    code: str = Field(min_length=1, max_length=40)
+    phase: str = Field(min_length=1, max_length=200)
+    gate: str = Field(default='', max_length=200)
+    deliverables: list[str] = Field(default_factory=list, max_length=50)
+    criteria: list[str] = Field(default_factory=list, max_length=50)
+    evidence: list[str] = Field(default_factory=list, max_length=50)
+    metrics: list[str] = Field(default_factory=list, max_length=50)
+
+
 class ProjectInput(BaseModel):
     code: str = Field(min_length=1, max_length=64)
     name: str = Field(min_length=1, max_length=200)
@@ -67,6 +78,9 @@ class ProjectInput(BaseModel):
     currency: str = Field(default='CNY', pattern='^[A-Z]{3}$')
     budget: float = Field(default=0, ge=0, le=1e12, allow_inf_nan=False)
     description: str = Field(default='', max_length=20000)
+    project_type: Literal['general', 'apqp_exhaust_weld_pipe'] = 'general'
+    template_id: str | None = Field(default=None, max_length=100)
+    quality_requirements: list[ProjectQualityRequirement] = Field(default_factory=list, max_length=30)
     import_evidence: ProjectImportEvidence | None = None
     tasks: list[ProjectTask] = Field(default_factory=list, max_length=500)
     version: int = Field(default=1, ge=1)
@@ -102,4 +116,7 @@ class ProjectInput(BaseModel):
 
 def project_data(record):
     data = json.loads(record.payload)
+    data.setdefault('project_type', 'general')
+    data.setdefault('template_id', None)
+    data.setdefault('quality_requirements', [])
     return {**data, 'id': record.id, 'version': record.version}

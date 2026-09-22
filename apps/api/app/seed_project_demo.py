@@ -21,6 +21,7 @@ from app.domain.persistence import (
 from app.domain.project_costs import ProjectAllocation
 from app.domain.project_notifications import ProjectNotification
 from app.domain.projects import ProjectBaseline, ProjectInput, ProjectRecord, ProjectTask
+from app.services.project_templates import APQP_TEMPLATE_ID, apqp_template
 
 PREFIX = 'pebs-project-demo-v1:'
 
@@ -44,12 +45,31 @@ def seed(db):
         counts[model.__tablename__] = counts.get(model.__tablename__, 0)+1
         return item
 
+    def remove_demo_project(key):
+        """Remove only the superseded, explicitly marked project fixtures."""
+        project_id = uid(key)
+        for model in (ProjectAllocation, ProjectBaseline, ProjectNotification):
+            for row in list(db.scalars(select(model).where(model.project_id == project_id))):
+                db.delete(row)
+                removed_key = 'removed_' + model.__tablename__
+                counts[removed_key] = counts.get(removed_key, 0) + 1
+        record = db.get(ProjectRecord, project_id)
+        if record:
+            db.delete(record)
+            removed_key = 'removed_' + ProjectRecord.__tablename__
+            counts[removed_key] = counts.get(removed_key, 0) + 1
+
+    # Keep the teaching workspace compact: two legacy scenarios plus one APQP
+    # scenario. These IDs are owned by this seed and are never user-created IDs.
+    for key in ('project2', 'project3', 'project4', 'project5'):
+        remove_demo_project(key)
+
     staff = [put(StaffUserRecord, 'staff'+str(i), user_code=f'DEMO-PM-{i+1:02}', name='【演示】'+name, department='项目管理部', title='项目经理', role='procurement_manager', email='', created_by='project-demo') for i, name in enumerate(['陈晨', '李明', '王敏'])]
     supplier = put(SupplierRecord, 'supplier', code='DEMO-PROJECT-S01', name='【演示】精工设备配套厂')
     material = put(MaterialRecord, 'material', code='DEMO-PROJECT-M01', name='【演示】装配线控制组件')
     put(FactoryRecord, 'factory', code='DEMO-PROJECT-FACTORY', name='【演示】项目交付工厂')
-    names = ['自动装配线交付', '汽车零件试制', '产线搬迁改造', '智能仓储规划', '工装夹具验收', '历史设备升级']
-    statuses = ['active', 'active', 'active', 'draft', 'completed', 'archived']
+    names = ['自动装配线交付', '汽车零件试制']
+    statuses = ['active', 'active']
     for i, name in enumerate(names):
         key = 'project'+str(i)
         # Once created, the entire project scenario belongs to the user.
@@ -72,7 +92,7 @@ def seed(db):
             tasks[2].finish = today-timedelta(days=1)
             tasks[3].start = today
             tasks[3].finish = today+timedelta(days=2)
-        budget = [100000, 180000, 120000, 80000, 150000, 90000][i]
+        budget = [100000, 180000][i]
         data = ProjectInput(code=f'DEMO-PRJ-{i+1:03}', name='【演示】'+name, manager_id=manager.id, status=statuses[i], budget=budget, tasks=tasks, description='【演示数据】虚构项目，用于查看甘特图、负责人联动、采购分摊、基线及通知。不是实际业务。')
         project = put(ProjectRecord, key, code=data.code, name=data.name, status=data.status, payload=data.model_dump_json())
         baseline = data.model_copy(deep=True)
@@ -92,6 +112,37 @@ def seed(db):
         if i == 0:
             put(ProjectNotification, 'notice-cost', event_key=hashlib.sha256(f'cost|{project.id}|{manager.id}|{data.budget}|135600.00'.encode()).hexdigest(), project_id=project.id, task_id='', owner_id=manager.id, subject='【演示】采购承诺超预算 · '+data.code, body='【演示】采购承诺135600元，项目预算100000元，超出35600元。仅为演示，不代表实际支出。', kind='cost_overrun', created_at=now.isoformat())
             put(ProjectNotification, 'notice-task', event_key=hashlib.sha256(f'{project.id}|T3|{tasks[2].finish}|{manager.id}|overdue'.encode()).hexdigest(), project_id=project.id, task_id='T3', owner_id=manager.id, subject='【演示】采购准备逾期 · '+data.code, body='【演示】采购准备任务尚未完成，请在项目工作台查看计划。演示人员无邮箱，不发送邮件。', kind='overdue', created_at=now.isoformat())
+    # A complete APQP demo is intentionally active so the project page shows
+    # all six gates, the 20 template tasks and a usable Gantt schedule.
+    apqp_key = 'apqp-project'
+    if not db.get(ProjectRecord, uid(apqp_key)):
+        manager = staff[0]
+        template = apqp_template()
+        apqp_tasks = []
+        for index, item in enumerate(template['tasks']):
+            start = today + timedelta(days=index * 2)
+            finish = start if item['kind'] == 'milestone' else start + timedelta(days=1)
+            apqp_tasks.append(ProjectTask.model_validate({
+                **item,
+                'owner_id': manager.id,
+                'start': start,
+                'finish': finish,
+                'progress': 100 if index < 2 else 35,
+            }))
+        apqp_data = ProjectInput(
+            code='DEMO-APQP-001',
+            name='【演示】汽车排气管焊管 APQP→PPAP 项目',
+            manager_id=manager.id,
+            status='active',
+            budget=360000,
+            project_type=template['project_type'],
+            template_id=APQP_TEMPLATE_ID,
+            quality_requirements=template['quality_requirements'],
+            tasks=apqp_tasks,
+            description='【演示数据】汽车排气管焊管质量项目，覆盖APQP六阶段门、DFMEA/PFMEA、控制计划、Cp/Cpk和PPAP。不是实际业务。',
+        )
+        apqp_project = put(ProjectRecord, apqp_key, code=apqp_data.code, name=apqp_data.name, status=apqp_data.status, payload=apqp_data.model_dump_json())
+        put(ProjectBaseline, 'baseline-apqp', project_id=apqp_project.id, project_version=1, created_by='project-demo', created_at=(now-timedelta(days=3)).isoformat(), payload=apqp_data.model_dump_json())
     if counts:
         db.add(AuditLogRecord(actor_id='project-demo', actor_role='admin', action='seed_demo', resource_type='project_demo', resource_id='v1', detail='新增明确标记的虚构项目演示数据；不覆盖现有数据；不发送邮件。'))
     db.flush()
