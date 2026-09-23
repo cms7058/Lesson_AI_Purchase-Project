@@ -19,3 +19,13 @@ apps/web/dist/
 apps/api/private_*/
 apps/api/generated_assets/
 apps/api/generated_documents/
+
+# Local deployment credentials and database backups
+.env.*
+!.env.example
+!.env.*.example
+backups/
+*.dump
+*.db-*
+*.pem
+*.key
